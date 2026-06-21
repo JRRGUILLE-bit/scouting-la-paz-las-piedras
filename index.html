@@ -5,69 +5,356 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Locaciones de Jona</title>
   <style>
-    :root{--bg:#0b1020;--panel:#121a2e;--panel2:#17233d;--text:#f8fafc;--muted:#cbd5e1;--sub:#94a3b8;--line:#2c3a55;--green:#22c55e;--blue:#38bdf8;--amber:#fbbf24;--ink:#020617;--pink:#fb7185}
-    *{box-sizing:border-box}
-    body{margin:0;background:linear-gradient(180deg,#070b16 0%,var(--bg) 100%);color:var(--text);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.35}
-    header{padding:30px 20px 24px;border-bottom:1px solid var(--line);background:rgba(2,6,23,.92);position:sticky;top:0;z-index:10;backdrop-filter:blur(8px)}
-    .wrap{max-width:1280px;margin:0 auto}
-    .header-grid{display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:22px;align-items:center}
-    main{max-width:1280px;margin:0 auto;padding:22px 20px 38px}
-    h1{margin:0 0 8px;font-size:clamp(30px,5vw,44px);letter-spacing:-.03em}
-    .subtitle{margin:0 0 14px;color:var(--muted);font-size:18px;max-width:900px}
-    .subtitle strong{color:var(--amber)}
-    .top{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
-    .sheet{display:inline-block;text-decoration:none;background:var(--amber);color:#111827;font-weight:900;border-radius:12px;padding:13px 16px;box-shadow:0 8px 18px rgba(0,0,0,.28)}
-    .sheet:hover{transform:translateY(-1px);filter:brightness(1.04)}
-    .ver{color:var(--sub);font-size:12px}
-    .car-badge{justify-self:end;position:relative;width:240px;height:112px;overflow:visible}
-    .jona-car{width:230px;height:112px;overflow:visible;filter:drop-shadow(0 12px 18px rgba(0,0,0,.38))}
-    .car-body-svg{animation:carBounce 1.45s ease-in-out infinite;transform-origin:128px 72px}
-    .wheel-svg{animation:wheelSpin .7s linear infinite;transform-box:fill-box;transform-origin:center}
-    .smoke-a{animation:smokeFloat 2.15s ease-out infinite}
-    .smoke-b{animation:smokeFloat 2.15s ease-out infinite .42s}
-    .smoke-c{animation:smokeFloat 2.15s ease-out infinite .84s}
-    .headlight-glow{animation:headlightPulse 1.8s ease-in-out infinite}
-    @keyframes wheelSpin{to{transform:rotate(360deg)}}
-    @keyframes carBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
-    @keyframes smokeFloat{0%{opacity:0;transform:translate(0,0) scale(.45)}18%{opacity:.5}100%{opacity:0;transform:translate(-48px,-13px) scale(1.7)}}
-    @keyframes headlightPulse{0%,100%{opacity:.16}50%{opacity:.42}}
-    h2{margin:34px 0 14px;font-size:clamp(22px,3vw,30px)}
-    .note{color:var(--muted);margin:-6px 0 18px}
-    .card{display:grid;grid-template-columns:minmax(260px,380px) minmax(280px,1fr) minmax(190px,230px);gap:18px;align-items:stretch;background:rgba(18,26,46,.96);border:1px solid var(--line);border-radius:18px;padding:16px;margin:16px 0;box-shadow:0 12px 34px rgba(0,0,0,.27)}
-    .photo{background:#020617;border:1px solid #1f2937;border-radius:14px;overflow:hidden}
-    .photo img{width:100%;height:245px;object-fit:cover;display:block;background:#020617}
-    .cap{color:var(--sub);font-size:12px;padding:9px 10px;border-top:1px solid #1f2937}
-    .tag{display:inline-flex;padding:5px 10px;border-radius:999px;font-size:12px;font-weight:800;margin-bottom:10px}
-    .lapaz .tag{background:rgba(34,197,94,.16);color:#bbf7d0;border:1px solid rgba(34,197,94,.35)}
-    .piedras .tag{background:rgba(56,189,248,.16);color:#bae6fd;border:1px solid rgba(56,189,248,.35)}
-    h3{margin:0 0 10px;font-size:24px}
-    .meta{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 12px;color:var(--muted);font-size:14px}
-    .meta span{background:var(--panel2);border:1px solid var(--line);padding:6px 8px;border-radius:8px}
-    .coords{display:inline-block;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:#e2e8f0;background:#020617;border:1px solid #1f2937;padding:8px 10px;border-radius:9px;margin:6px 0 12px}
-    .files{color:var(--sub);font-size:13px;word-break:break-word}
-    .files b{color:var(--muted)}
-    .actions{display:flex;flex-direction:column;justify-content:center;gap:12px}
-    .btn{display:block;text-decoration:none;text-align:center;border-radius:12px;padding:14px 12px;font-weight:850;color:#04111f;box-shadow:0 6px 16px rgba(0,0,0,.24)}
-    .btn:hover{transform:translateY(-1px);filter:brightness(1.04)}
-    .nav{background:var(--green)}.map{background:var(--blue)}.com{background:var(--amber)}
-    footer{color:var(--sub);border-top:1px solid var(--line);margin-top:34px;padding-top:18px;font-size:13px}
-    @media(max-width:920px){.header-grid{grid-template-columns:1fr 170px}.car-badge{width:170px;transform:scale(.78);transform-origin:right center}.card{grid-template-columns:290px 1fr}.actions{grid-column:1/-1;flex-direction:row}.btn{flex:1}}
-    @media(max-width:680px){header{position:static;padding:22px 14px 18px}.header-grid{grid-template-columns:1fr}.car-badge{justify-self:start;margin-top:2px;height:72px;transform:scale(.68);transform-origin:left center}main{padding:14px}.card{grid-template-columns:1fr;padding:12px}.photo img{height:260px}.actions{flex-direction:column}}
+    :root {
+      --bg:#0b1020;
+      --panel:#121a2e;
+      --panel2:#17233d;
+      --text:#f8fafc;
+      --muted:#cbd5e1;
+      --sub:#94a3b8;
+      --line:#2c3a55;
+      --green:#22c55e;
+      --blue:#38bdf8;
+      --amber:#fbbf24;
+      --pink:#fb7185;
+    }
+
+    * { box-sizing:border-box; }
+
+    body {
+      margin:0;
+      background:linear-gradient(180deg,#070b16 0%,var(--bg) 100%);
+      color:var(--text);
+      font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+      line-height:1.35;
+    }
+
+    header {
+      padding:30px 20px 24px;
+      border-bottom:1px solid var(--line);
+      background:rgba(2,6,23,.92);
+      position:sticky;
+      top:0;
+      z-index:10;
+      backdrop-filter:blur(8px);
+    }
+
+    .wrap {
+      max-width:1280px;
+      margin:0 auto;
+    }
+
+    .header-grid {
+      display:grid;
+      grid-template-columns:minmax(0,1fr) 250px;
+      gap:22px;
+      align-items:center;
+    }
+
+    main {
+      max-width:1280px;
+      margin:0 auto;
+      padding:22px 20px 38px;
+    }
+
+    h1 {
+      margin:0 0 8px;
+      font-size:clamp(30px,5vw,44px);
+      letter-spacing:-.03em;
+    }
+
+    .subtitle {
+      margin:0 0 14px;
+      color:var(--muted);
+      font-size:18px;
+      max-width:900px;
+    }
+
+    .subtitle strong {
+      color:var(--amber);
+    }
+
+    .top {
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      align-items:center;
+    }
+
+    .sheet {
+      display:inline-block;
+      text-decoration:none;
+      background:var(--amber);
+      color:#111827;
+      font-weight:900;
+      border-radius:12px;
+      padding:13px 16px;
+      box-shadow:0 8px 18px rgba(0,0,0,.28);
+    }
+
+    .sheet:hover {
+      transform:translateY(-1px);
+      filter:brightness(1.04);
+    }
+
+    .ver {
+      color:var(--sub);
+      font-size:12px;
+    }
+
+    .car-badge {
+      justify-self:end;
+      position:relative;
+      width:240px;
+      height:112px;
+      overflow:visible;
+    }
+
+    .jona-car {
+      width:230px;
+      height:112px;
+      overflow:visible;
+      filter:drop-shadow(0 12px 18px rgba(0,0,0,.38));
+    }
+
+    .car-body-svg {
+      animation:carBounce 1.45s ease-in-out infinite;
+      transform-origin:128px 72px;
+    }
+
+    .wheel-svg {
+      animation:wheelSpin .7s linear infinite;
+      transform-box:fill-box;
+      transform-origin:center;
+    }
+
+    .motion-a { animation:motionPulse 1s ease-in-out infinite; }
+    .motion-b { animation:motionPulse 1s ease-in-out infinite .25s; }
+    .motion-c { animation:motionPulse 1s ease-in-out infinite .5s; }
+
+    .headlight-glow {
+      animation:headlightPulse 1.8s ease-in-out infinite;
+    }
+
+    @keyframes wheelSpin {
+      to { transform:rotate(360deg); }
+    }
+
+    @keyframes carBounce {
+      0%,100% { transform:translateY(0); }
+      50% { transform:translateY(-4px); }
+    }
+
+    @keyframes motionPulse {
+      0%,100% { opacity:.14; transform:translateX(0); }
+      50% { opacity:.68; transform:translateX(-8px); }
+    }
+
+    @keyframes headlightPulse {
+      0%,100% { opacity:.16; }
+      50% { opacity:.42; }
+    }
+
+    h2 {
+      margin:34px 0 14px;
+      font-size:clamp(22px,3vw,30px);
+    }
+
+    .note {
+      color:var(--muted);
+      margin:-6px 0 18px;
+    }
+
+    .card {
+      display:grid;
+      grid-template-columns:minmax(260px,380px) minmax(280px,1fr) minmax(190px,230px);
+      gap:18px;
+      align-items:stretch;
+      background:rgba(18,26,46,.96);
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:16px;
+      margin:16px 0;
+      box-shadow:0 12px 34px rgba(0,0,0,.27);
+    }
+
+    .photo {
+      background:#020617;
+      border:1px solid #1f2937;
+      border-radius:14px;
+      overflow:hidden;
+    }
+
+    .photo img {
+      width:100%;
+      height:245px;
+      object-fit:cover;
+      display:block;
+      background:#020617;
+    }
+
+    .cap {
+      color:var(--sub);
+      font-size:12px;
+      padding:9px 10px;
+      border-top:1px solid #1f2937;
+    }
+
+    .tag {
+      display:inline-flex;
+      padding:5px 10px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:800;
+      margin-bottom:10px;
+    }
+
+    .lapaz .tag {
+      background:rgba(34,197,94,.16);
+      color:#bbf7d0;
+      border:1px solid rgba(34,197,94,.35);
+    }
+
+    .piedras .tag {
+      background:rgba(56,189,248,.16);
+      color:#bae6fd;
+      border:1px solid rgba(56,189,248,.35);
+    }
+
+    h3 {
+      margin:0 0 10px;
+      font-size:24px;
+    }
+
+    .meta {
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin:8px 0 12px;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .meta span {
+      background:var(--panel2);
+      border:1px solid var(--line);
+      padding:6px 8px;
+      border-radius:8px;
+    }
+
+    .coords {
+      display:inline-block;
+      font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+      color:#e2e8f0;
+      background:#020617;
+      border:1px solid #1f2937;
+      padding:8px 10px;
+      border-radius:9px;
+      margin:6px 0 12px;
+    }
+
+    .files {
+      color:var(--sub);
+      font-size:13px;
+      word-break:break-word;
+    }
+
+    .files b {
+      color:var(--muted);
+    }
+
+    .actions {
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      gap:12px;
+    }
+
+    .btn {
+      display:block;
+      text-decoration:none;
+      text-align:center;
+      border-radius:12px;
+      padding:14px 12px;
+      font-weight:850;
+      color:#04111f;
+      box-shadow:0 6px 16px rgba(0,0,0,.24);
+    }
+
+    .btn:hover {
+      transform:translateY(-1px);
+      filter:brightness(1.04);
+    }
+
+    .nav { background:var(--green); }
+    .map { background:var(--blue); }
+    .com { background:var(--amber); }
+
+    footer {
+      color:var(--sub);
+      border-top:1px solid var(--line);
+      margin-top:34px;
+      padding-top:18px;
+      font-size:13px;
+    }
+
+    @media(max-width:920px) {
+      .header-grid { grid-template-columns:1fr 170px; }
+      .car-badge {
+        width:170px;
+        transform:scale(.78);
+        transform-origin:right center;
+      }
+      .card { grid-template-columns:290px 1fr; }
+      .actions {
+        grid-column:1/-1;
+        flex-direction:row;
+      }
+      .btn { flex:1; }
+    }
+
+    @media(max-width:680px) {
+      header {
+        position:static;
+        padding:22px 14px 18px;
+      }
+      .header-grid { grid-template-columns:1fr; }
+      .car-badge {
+        justify-self:start;
+        margin-top:2px;
+        height:72px;
+        transform:scale(.68);
+        transform-origin:left center;
+      }
+      main { padding:14px; }
+      .card {
+        grid-template-columns:1fr;
+        padding:12px;
+      }
+      .photo img { height:260px; }
+      .actions { flex-direction:column; }
+    }
   </style>
 </head>
+
 <body>
   <header>
     <div class="wrap header-grid">
       <div>
         <h1>Locaciones de Jona</h1>
         <p class="subtitle"><strong>Bon Voyage. Kaprandonga Baby!</strong> Orden: La Paz / Lezica-Melilla primero; Las Piedras después.</p>
-        <div class="top"><a class="sheet" href="https://docs.google.com/spreadsheets/d/10o4HNlt5l3S0b_ih6YBVbhaPZ8wBh-a8/edit?usp=sharing&ouid=115486979862360019218&rtpof=true&sd=true" target="_blank" rel="noopener">Abrir planilla de comentarios</a><span class="ver">v2026-06-21-06</span></div>
+        <div class="top">
+          <a class="sheet" href="https://docs.google.com/spreadsheets/d/10o4HNlt5l3S0b_ih6YBVbhaPZ8wBh-a8/edit?usp=sharing&ouid=115486979862360019218&rtpof=true&sd=true" target="_blank" rel="noopener">Abrir planilla de comentarios</a>
+          <span class="ver">v2026-06-21-07</span>
+        </div>
       </div>
+
       <div class="car-badge" aria-hidden="true">
         <svg class="jona-car" viewBox="0 0 240 120" xmlns="http://www.w3.org/2000/svg">
-          <circle class="smoke-a" cx="73" cy="77" r="7" fill="#cbd5e1" opacity=".36"/>
-          <circle class="smoke-b" cx="70" cy="74" r="5.5" fill="#94a3b8" opacity=".32"/>
-          <circle class="smoke-c" cx="68" cy="81" r="4.5" fill="#64748b" opacity=".26"/>
+          <line class="motion-a" x1="58" y1="58" x2="18" y2="58" stroke="#60a5fa" stroke-width="4" stroke-linecap="round"/>
+          <line class="motion-b" x1="50" y1="72" x2="12" y2="72" stroke="#60a5fa" stroke-width="4" stroke-linecap="round"/>
+          <line class="motion-c" x1="54" y1="86" x2="22" y2="86" stroke="#60a5fa" stroke-width="4" stroke-linecap="round"/>
+
           <g class="car-body-svg">
             <ellipse cx="142" cy="95" rx="64" ry="9" fill="#000" opacity=".18"/>
             <path d="M78 78 L91 55 Q99 43 116 43 L151 43 Q167 43 177 56 L188 70 Q201 70 208 76 Q215 82 215 89 L70 89 Q70 82 78 78 Z" fill="#0f172a" stroke="#f8fafc" stroke-width="4" stroke-linejoin="round"/>
@@ -76,47 +363,95 @@
             <circle class="headlight-glow" cx="212" cy="80" r="16" fill="#fde047"/>
             <circle cx="211" cy="80" r="5" fill="#fde047"/>
             <rect x="80" y="71" width="16" height="5" rx="3" fill="#fb7185" opacity=".9"/>
-            <line x1="72" y1="78" x2="60" y2="78" stroke="#94a3b8" stroke-width="3" stroke-linecap="round" opacity=".8"/>
-            <g class="wheel-svg"><circle cx="102" cy="91" r="18" fill="#020617" stroke="#f8fafc" stroke-width="4"/><circle cx="102" cy="91" r="5" fill="#94a3b8"/><line x1="102" y1="73" x2="102" y2="109" stroke="#cbd5e1" stroke-width="2.5"/><line x1="84" y1="91" x2="120" y2="91" stroke="#cbd5e1" stroke-width="2.5"/></g>
-            <g class="wheel-svg"><circle cx="181" cy="91" r="18" fill="#020617" stroke="#f8fafc" stroke-width="4"/><circle cx="181" cy="91" r="5" fill="#94a3b8"/><line x1="181" y1="73" x2="181" y2="109" stroke="#cbd5e1" stroke-width="2.5"/><line x1="163" y1="91" x2="199" y2="91" stroke="#cbd5e1" stroke-width="2.5"/></g>
+
+            <g class="wheel-svg">
+              <circle cx="102" cy="91" r="18" fill="#020617" stroke="#f8fafc" stroke-width="4"/>
+              <circle cx="102" cy="91" r="5" fill="#94a3b8"/>
+              <line x1="102" y1="73" x2="102" y2="109" stroke="#cbd5e1" stroke-width="2.5"/>
+              <line x1="84" y1="91" x2="120" y2="91" stroke="#cbd5e1" stroke-width="2.5"/>
+            </g>
+
+            <g class="wheel-svg">
+              <circle cx="181" cy="91" r="18" fill="#020617" stroke="#f8fafc" stroke-width="4"/>
+              <circle cx="181" cy="91" r="5" fill="#94a3b8"/>
+              <line x1="181" y1="73" x2="181" y2="109" stroke="#cbd5e1" stroke-width="2.5"/>
+              <line x1="163" y1="91" x2="199" y2="91" stroke="#cbd5e1" stroke-width="2.5"/>
+            </g>
           </g>
         </svg>
       </div>
     </div>
   </header>
+
   <main>
-    <section><h2>La Paz / Lezica-Melilla</h2><p class="note">Locaciones registradas en la primera zona del scouting.</p><div id="lapaz"></div></section>
-    <section><h2>Las Piedras</h2><p class="note">Locaciones registradas en la segunda zona del scouting.</p><div id="piedras"></div></section>
+    <section>
+      <h2>La Paz / Lezica-Melilla</h2>
+      <p class="note">Locaciones registradas en la primera zona del scouting.</p>
+      <div id="lapaz"></div>
+    </section>
+
+    <section>
+      <h2>Las Piedras</h2>
+      <p class="note">Locaciones registradas en la segunda zona del scouting.</p>
+      <div id="piedras"></div>
+    </section>
+
     <footer>Fotos de referencia y coordenadas extraídas del scouting. Las observaciones del equipo se centralizan en la planilla enlazada arriba.</footer>
   </main>
+
   <script>
-    const sheet='https://docs.google.com/spreadsheets/d/10o4HNlt5l3S0b_ih6YBVbhaPZ8wBh-a8/edit?usp=sharing&ouid=115486979862360019218&rtpof=true&sd=true';
-    const locs=[
-      ['lapaz','La Paz / Lezica-Melilla','01',-34.763729,-56.225765,'6 fotos registradas','15:26–16:02','IMG_4588 IMG_4589 IMG_4590 IMG_4591 IMG_4615 IMG_4616'],
-      ['lapaz','La Paz / Lezica-Melilla','02',-34.763733,-56.229056,'3 fotos registradas','15:31','IMG_4592 IMG_4593 IMG_4594'],
-      ['lapaz','La Paz / Lezica-Melilla','03',-34.763479,-56.229963,'3 fotos registradas','15:33–15:34','IMG_4595 IMG_4596 IMG_4597'],
-      ['lapaz','La Paz / Lezica-Melilla','04',-34.762886,-56.229999,'2 fotos registradas','15:35','IMG_4598 IMG_4599'],
-      ['lapaz','La Paz / Lezica-Melilla','05',-34.761736,-56.228847,'2 fotos registradas','15:40','IMG_4601 IMG_4602'],
-      ['lapaz','La Paz / Lezica-Melilla','06',-34.760739,-56.228872,'2 fotos registradas','15:42','IMG_4603 IMG_4604'],
-      ['lapaz','La Paz / Lezica-Melilla','07',-34.759807,-56.228943,'6 fotos registradas','15:44–15:45','IMG_4605 IMG_4606 IMG_4607 IMG_4608 IMG_4609 IMG_4610'],
-      ['lapaz','La Paz / Lezica-Melilla','08',-34.759128,-56.228285,'2 fotos registradas','15:47','IMG_4611 IMG_4612'],
-      ['lapaz','La Paz / Lezica-Melilla','09',-34.760522,-56.225763,'2 fotos registradas','15:56','IMG_4613 IMG_4614'],
-      ['lapaz','La Paz / Lezica-Melilla','10',-34.763665,-56.224144,'2 fotos registradas','16:04','IMG_4617 IMG_4618'],
-      ['piedras','Las Piedras','11',-34.725643,-56.217147,'2 fotos registradas','16:30–16:31','IMG_4619 IMG_4620'],
-      ['piedras','Las Piedras','12',-34.724747,-56.217196,'2 fotos registradas','16:32','IMG_4621 IMG_4622'],
-      ['piedras','Las Piedras','13',-34.729806,-56.222681,'2 fotos registradas','16:40–16:41','IMG_4623 IMG_4624'],
-      ['piedras','Las Piedras','14',-34.727578,-56.221481,'2 fotos registradas','16:45','IMG_4625 IMG_4626'],
-      ['piedras','Las Piedras','15',-34.722098,-56.211445,'5 fotos registradas','16:57–16:58','IMG_4627 IMG_4628 IMG_4629 IMG_4630 IMG_4631']
+    const sheet = 'https://docs.google.com/spreadsheets/d/10o4HNlt5l3S0b_ih6YBVbhaPZ8wBh-a8/edit?usp=sharing&ouid=115486979862360019218&rtpof=true&sd=true';
+
+    const locs = [
+      ['lapaz','La Paz / Lezica-Melilla','01',-34.763729,-56.225765,'6 fotos registradas','IMG_4588 IMG_4589 IMG_4590 IMG_4591 IMG_4615 IMG_4616'],
+      ['lapaz','La Paz / Lezica-Melilla','02',-34.763733,-56.229056,'3 fotos registradas','IMG_4592 IMG_4593 IMG_4594'],
+      ['lapaz','La Paz / Lezica-Melilla','03',-34.763479,-56.229963,'3 fotos registradas','IMG_4595 IMG_4596 IMG_4597'],
+      ['lapaz','La Paz / Lezica-Melilla','04',-34.762886,-56.229999,'2 fotos registradas','IMG_4598 IMG_4599'],
+      ['lapaz','La Paz / Lezica-Melilla','05',-34.761736,-56.228847,'2 fotos registradas','IMG_4601 IMG_4602'],
+      ['lapaz','La Paz / Lezica-Melilla','06',-34.760739,-56.228872,'2 fotos registradas','IMG_4603 IMG_4604'],
+      ['lapaz','La Paz / Lezica-Melilla','07',-34.759807,-56.228943,'6 fotos registradas','IMG_4605 IMG_4606 IMG_4607 IMG_4608 IMG_4609 IMG_4610'],
+      ['lapaz','La Paz / Lezica-Melilla','08',-34.759128,-56.228285,'2 fotos registradas','IMG_4611 IMG_4612'],
+      ['lapaz','La Paz / Lezica-Melilla','09',-34.760522,-56.225763,'2 fotos registradas','IMG_4613 IMG_4614'],
+      ['lapaz','La Paz / Lezica-Melilla','10',-34.763665,-56.224144,'2 fotos registradas','IMG_4617 IMG_4618'],
+      ['piedras','Las Piedras','11',-34.725643,-56.217147,'2 fotos registradas','IMG_4619 IMG_4620'],
+      ['piedras','Las Piedras','12',-34.724747,-56.217196,'2 fotos registradas','IMG_4621 IMG_4622'],
+      ['piedras','Las Piedras','13',-34.729806,-56.222681,'2 fotos registradas','IMG_4623 IMG_4624'],
+      ['piedras','Las Piedras','14',-34.727578,-56.221481,'2 fotos registradas','IMG_4625 IMG_4626'],
+      ['piedras','Las Piedras','15',-34.722098,-56.211445,'5 fotos registradas','IMG_4627 IMG_4628 IMG_4629 IMG_4630 IMG_4631']
     ];
-    function card(l){
-      const [kind,zone,num,lat,lon,count,time,files]=l;
-      const q=`${lat.toFixed(6)},${lon.toFixed(6)}`;
-      const nav=`https://www.google.com/maps/dir/?api=1&destination=${q}&travelmode=driving`;
-      const map=`https://www.google.com/maps?q=${q}`;
-      return `<article class="card ${kind}" id="locacion-${num}"><div class="photo"><img src="assets/locacion-${num}.jpg" alt="Foto de referencia locación ${num}" loading="lazy"><div class="cap">Foto de referencia · Locación Jona ${num}</div></div><div><span class="tag">${zone}</span><h3>Locación Jona ${num}</h3><div class="meta"><span>${count}</span><span>${time}</span></div><div class="coords">${q}</div><div class="files"><b>Archivos:</b> ${files}</div></div><div class="actions"><a class="btn nav" href="${nav}" target="_blank" rel="noopener">Navegar</a><a class="btn map" href="${map}" target="_blank" rel="noopener">Ver en Google Maps</a><a class="btn com" href="${sheet}" target="_blank" rel="noopener">Planilla de comentarios</a></div></article>`;
+
+    function card(l) {
+      const [kind, zone, num, lat, lon, count, files] = l;
+      const q = `${lat.toFixed(6)},${lon.toFixed(6)}`;
+      const nav = `https://www.google.com/maps/dir/?api=1&destination=${q}&travelmode=driving`;
+      const map = `https://www.google.com/maps?q=${q}`;
+
+      return `
+        <article class="card ${kind}" id="locacion-${num}">
+          <div class="photo">
+            <img src="assets/locacion-${num}.jpg" alt="Foto de referencia locación ${num}" loading="lazy">
+            <div class="cap">Foto de referencia · Locación Jona ${num}</div>
+          </div>
+
+          <div>
+            <span class="tag">${zone}</span>
+            <h3>Locación Jona ${num}</h3>
+            <div class="meta"><span>${count}</span></div>
+            <div class="coords">${q}</div>
+            <div class="files"><b>Archivos:</b> ${files}</div>
+          </div>
+
+          <div class="actions">
+            <a class="btn nav" href="${nav}" target="_blank" rel="noopener">Navegar</a>
+            <a class="btn map" href="${map}" target="_blank" rel="noopener">Ver en Google Maps</a>
+            <a class="btn com" href="${sheet}" target="_blank" rel="noopener">Planilla de comentarios</a>
+          </div>
+        </article>
+      `;
     }
-    document.getElementById('lapaz').innerHTML=locs.filter(x=>x[0]==='lapaz').map(card).join('');
-    document.getElementById('piedras').innerHTML=locs.filter(x=>x[0]==='piedras').map(card).join('');
+
+    document.getElementById('lapaz').innerHTML = locs.filter(x => x[0] === 'lapaz').map(card).join('');
+    document.getElementById('piedras').innerHTML = locs.filter(x => x[0] === 'piedras').map(card).join('');
   </script>
 </body>
 </html>
