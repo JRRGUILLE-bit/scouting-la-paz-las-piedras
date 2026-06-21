@@ -5,10 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Locaciones de Jona</title>
   <style>
-    :root{
-      --bg:#0b1020;--panel:#121a2e;--panel2:#17233d;--text:#f8fafc;--muted:#cbd5e1;--sub:#94a3b8;--line:#2c3a55;
-      --green:#22c55e;--blue:#38bdf8;--amber:#fbbf24;--ink:#020617;--pink:#fb7185;
-    }
+    :root{--bg:#0b1020;--panel:#121a2e;--panel2:#17233d;--text:#f8fafc;--muted:#cbd5e1;--sub:#94a3b8;--line:#2c3a55;--green:#22c55e;--blue:#38bdf8;--amber:#fbbf24;--ink:#020617;--pink:#fb7185}
     *{box-sizing:border-box}
     body{margin:0;background:linear-gradient(180deg,#070b16 0%,var(--bg) 100%);color:var(--text);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.35}
     header{padding:30px 20px 24px;border-bottom:1px solid var(--line);background:rgba(2,6,23,.92);position:sticky;top:0;z-index:10;backdrop-filter:blur(8px)}
@@ -22,24 +19,18 @@
     .sheet{display:inline-block;text-decoration:none;background:var(--amber);color:#111827;font-weight:900;border-radius:12px;padding:13px 16px;box-shadow:0 8px 18px rgba(0,0,0,.28)}
     .sheet:hover{transform:translateY(-1px);filter:brightness(1.04)}
     .ver{color:var(--sub);font-size:12px}
-
     .car-badge{justify-self:end;position:relative;width:240px;height:112px;overflow:visible}
     .jona-car{width:230px;height:112px;overflow:visible;filter:drop-shadow(0 12px 18px rgba(0,0,0,.38))}
     .car-body-svg{animation:carBounce 1.45s ease-in-out infinite;transform-origin:128px 72px}
     .wheel-svg{animation:wheelSpin .7s linear infinite;transform-box:fill-box;transform-origin:center}
-    .smoke-a{animation:smokeFloat 2.4s ease-out infinite}
-    .smoke-b{animation:smokeFloat 2.4s ease-out infinite .45s}
-    .smoke-c{animation:smokeFloat 2.4s ease-out infinite .9s}
-    .motion-a{animation:motionPulse 1s ease-in-out infinite}
-    .motion-b{animation:motionPulse 1s ease-in-out infinite .25s}
-    .motion-c{animation:motionPulse 1s ease-in-out infinite .5s}
+    .smoke-a{animation:smokeFloat 2.15s ease-out infinite}
+    .smoke-b{animation:smokeFloat 2.15s ease-out infinite .42s}
+    .smoke-c{animation:smokeFloat 2.15s ease-out infinite .84s}
     .headlight-glow{animation:headlightPulse 1.8s ease-in-out infinite}
     @keyframes wheelSpin{to{transform:rotate(360deg)}}
     @keyframes carBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
-    @keyframes smokeFloat{0%{opacity:0;transform:translate(0,0) scale(.6)}18%{opacity:.55}100%{opacity:0;transform:translate(-34px,-16px) scale(1.55)}}
-    @keyframes motionPulse{0%,100%{opacity:.12;transform:translateX(0)}50%{opacity:.65;transform:translateX(-8px)}}
+    @keyframes smokeFloat{0%{opacity:0;transform:translate(0,0) scale(.45)}18%{opacity:.5}100%{opacity:0;transform:translate(-48px,-13px) scale(1.7)}}
     @keyframes headlightPulse{0%,100%{opacity:.16}50%{opacity:.42}}
-
     h2{margin:34px 0 14px;font-size:clamp(22px,3vw,30px)}
     .note{color:var(--muted);margin:-6px 0 18px}
     .card{display:grid;grid-template-columns:minmax(260px,380px) minmax(280px,1fr) minmax(190px,230px);gap:18px;align-items:stretch;background:rgba(18,26,46,.96);border:1px solid var(--line);border-radius:18px;padding:16px;margin:16px 0;box-shadow:0 12px 34px rgba(0,0,0,.27)}
@@ -70,16 +61,13 @@
       <div>
         <h1>Locaciones de Jona</h1>
         <p class="subtitle"><strong>Bon Voyage. Kaprandonga Baby!</strong> Orden: La Paz / Lezica-Melilla primero; Las Piedras después.</p>
-        <div class="top"><a class="sheet" href="https://docs.google.com/spreadsheets/d/10o4HNlt5l3S0b_ih6YBVbhaPZ8wBh-a8/edit?usp=sharing&ouid=115486979862360019218&rtpof=true&sd=true" target="_blank" rel="noopener">Abrir planilla de comentarios</a><span class="ver">v2026-06-21-05</span></div>
+        <div class="top"><a class="sheet" href="https://docs.google.com/spreadsheets/d/10o4HNlt5l3S0b_ih6YBVbhaPZ8wBh-a8/edit?usp=sharing&ouid=115486979862360019218&rtpof=true&sd=true" target="_blank" rel="noopener">Abrir planilla de comentarios</a><span class="ver">v2026-06-21-06</span></div>
       </div>
       <div class="car-badge" aria-hidden="true">
         <svg class="jona-car" viewBox="0 0 240 120" xmlns="http://www.w3.org/2000/svg">
-          <circle class="smoke-a" cx="42" cy="50" r="8" fill="#cbd5e1" opacity=".36"/>
-          <circle class="smoke-b" cx="26" cy="42" r="6" fill="#94a3b8" opacity=".32"/>
-          <circle class="smoke-c" cx="18" cy="58" r="5" fill="#64748b" opacity=".26"/>
-          <line class="motion-a" x1="54" y1="64" x2="18" y2="64" stroke="#60a5fa" stroke-width="4" stroke-linecap="round"/>
-          <line class="motion-b" x1="48" y1="76" x2="12" y2="76" stroke="#60a5fa" stroke-width="4" stroke-linecap="round"/>
-          <line class="motion-c" x1="48" y1="52" x2="16" y2="52" stroke="#60a5fa" stroke-width="4" stroke-linecap="round"/>
+          <circle class="smoke-a" cx="73" cy="77" r="7" fill="#cbd5e1" opacity=".36"/>
+          <circle class="smoke-b" cx="70" cy="74" r="5.5" fill="#94a3b8" opacity=".32"/>
+          <circle class="smoke-c" cx="68" cy="81" r="4.5" fill="#64748b" opacity=".26"/>
           <g class="car-body-svg">
             <ellipse cx="142" cy="95" rx="64" ry="9" fill="#000" opacity=".18"/>
             <path d="M78 78 L91 55 Q99 43 116 43 L151 43 Q167 43 177 56 L188 70 Q201 70 208 76 Q215 82 215 89 L70 89 Q70 82 78 78 Z" fill="#0f172a" stroke="#f8fafc" stroke-width="4" stroke-linejoin="round"/>
@@ -88,18 +76,9 @@
             <circle class="headlight-glow" cx="212" cy="80" r="16" fill="#fde047"/>
             <circle cx="211" cy="80" r="5" fill="#fde047"/>
             <rect x="80" y="71" width="16" height="5" rx="3" fill="#fb7185" opacity=".9"/>
-            <g class="wheel-svg">
-              <circle cx="102" cy="91" r="18" fill="#020617" stroke="#f8fafc" stroke-width="4"/>
-              <circle cx="102" cy="91" r="5" fill="#94a3b8"/>
-              <line x1="102" y1="73" x2="102" y2="109" stroke="#cbd5e1" stroke-width="2.5"/>
-              <line x1="84" y1="91" x2="120" y2="91" stroke="#cbd5e1" stroke-width="2.5"/>
-            </g>
-            <g class="wheel-svg">
-              <circle cx="181" cy="91" r="18" fill="#020617" stroke="#f8fafc" stroke-width="4"/>
-              <circle cx="181" cy="91" r="5" fill="#94a3b8"/>
-              <line x1="181" y1="73" x2="181" y2="109" stroke="#cbd5e1" stroke-width="2.5"/>
-              <line x1="163" y1="91" x2="199" y2="91" stroke="#cbd5e1" stroke-width="2.5"/>
-            </g>
+            <line x1="72" y1="78" x2="60" y2="78" stroke="#94a3b8" stroke-width="3" stroke-linecap="round" opacity=".8"/>
+            <g class="wheel-svg"><circle cx="102" cy="91" r="18" fill="#020617" stroke="#f8fafc" stroke-width="4"/><circle cx="102" cy="91" r="5" fill="#94a3b8"/><line x1="102" y1="73" x2="102" y2="109" stroke="#cbd5e1" stroke-width="2.5"/><line x1="84" y1="91" x2="120" y2="91" stroke="#cbd5e1" stroke-width="2.5"/></g>
+            <g class="wheel-svg"><circle cx="181" cy="91" r="18" fill="#020617" stroke="#f8fafc" stroke-width="4"/><circle cx="181" cy="91" r="5" fill="#94a3b8"/><line x1="181" y1="73" x2="181" y2="109" stroke="#cbd5e1" stroke-width="2.5"/><line x1="163" y1="91" x2="199" y2="91" stroke="#cbd5e1" stroke-width="2.5"/></g>
           </g>
         </svg>
       </div>
