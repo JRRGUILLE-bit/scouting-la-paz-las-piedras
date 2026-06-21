@@ -1,33 +1,505 @@
 <!doctype html>
 <html lang="es">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Locaciones de Jona</title>
-<style>
-:root{--bg:#0f172a;--card:#111827;--card2:#1f2937;--text:#f9fafb;--muted:#cbd5e1;--green:#22c55e;--blue:#38bdf8;--line:#334155}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.35}header{padding:24px 18px;background:#020617;border-bottom:1px solid var(--line)}main{padding:16px;max-width:1240px;margin:0 auto}h1{margin:0 0 6px;font-size:30px}h2{margin:28px 0 12px;font-size:24px}h3{margin:0 0 8px;font-size:20px}.muted,.meta{color:var(--muted)}.intro{max-width:880px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin-top:14px}.loc{display:grid;grid-template-columns:310px 1fr 220px;gap:16px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px;margin:14px 0;box-shadow:0 6px 20px rgba(0,0,0,.25)}.visual{background:#020617;border:1px solid #1f2937;border-radius:14px;padding:10px}.visual iframe{display:block;width:100%;height:210px;border:0;border-radius:10px}.caption{margin:8px 0 0;color:#94a3b8;font-size:12px}.pill{display:inline-block;font-size:12px;font-weight:800;padding:4px 9px;border-radius:999px;margin-bottom:8px}.lp{background:#14532d;color:#dcfce7}.lsp{background:#1e3a8a;color:#dbeafe}.coords{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px;color:#e2e8f0;background:#020617;display:inline-block;padding:5px 7px;border-radius:7px;margin-top:8px}.actions{display:flex;flex-direction:column;gap:10px;justify-content:center}.btn{display:block;text-align:center;text-decoration:none;border-radius:10px;padding:13px 12px;font-weight:800;background:var(--green);color:#03131f}.btn.secondary{background:var(--blue)}details{margin-top:12px}summary{cursor:pointer;color:#e5e7eb;font-weight:800}.files{word-break:break-word}@media(max-width:900px){.loc{grid-template-columns:260px 1fr}.actions{grid-column:1/-1;flex-direction:row}.btn{flex:1}}@media(max-width:650px){header{padding:18px 14px}main{padding:12px}.loc{grid-template-columns:1fr}.actions{flex-direction:column}h1{font-size:24px}}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="cache-control" content="no-cache">
+  <title>Locaciones de Jona</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --panel: #121a2e;
+      --panel-2: #17233d;
+      --text: #f8fafc;
+      --muted: #cbd5e1;
+      --subtle: #94a3b8;
+      --line: #2c3a55;
+      --green: #22c55e;
+      --blue: #38bdf8;
+      --amber: #fbbf24;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: linear-gradient(180deg, #070b16 0%, var(--bg) 100%);
+      color: var(--text);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      line-height: 1.35;
+    }
+    header {
+      padding: 28px 20px 22px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(2, 6, 23, .88);
+    }
+    main {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .header-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+    h1 {
+      margin: 0 0 8px;
+      font-size: clamp(28px, 5vw, 44px);
+      letter-spacing: -.03em;
+    }
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 17px;
+      max-width: 860px;
+    }
+    .version {
+      margin-top: 12px;
+      color: var(--subtle);
+      font-size: 12px;
+    }
+    h2 {
+      margin: 30px 0 14px;
+      font-size: clamp(22px, 3vw, 30px);
+      letter-spacing: -.02em;
+    }
+    .section-note {
+      color: var(--muted);
+      margin: -6px 0 16px;
+    }
+    .location-card {
+      display: grid;
+      grid-template-columns: minmax(250px, 360px) minmax(280px, 1fr) minmax(190px, 230px);
+      gap: 18px;
+      align-items: stretch;
+      background: rgba(18, 26, 46, .96);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 16px;
+      margin: 16px 0;
+      box-shadow: 0 12px 34px rgba(0, 0, 0, .27);
+    }
+    .photo-wrap {
+      background: #020617;
+      border: 1px solid #1f2937;
+      border-radius: 14px;
+      overflow: hidden;
+      min-height: 225px;
+      display: flex;
+      flex-direction: column;
+    }
+    .photo-wrap img {
+      width: 100%;
+      height: 230px;
+      object-fit: cover;
+      display: block;
+      background: #020617;
+    }
+    .photo-caption {
+      color: var(--subtle);
+      font-size: 12px;
+      padding: 9px 10px;
+      border-top: 1px solid #1f2937;
+    }
+    .location-info {
+      padding: 4px 0;
+    }
+    .zone-label {
+      display: inline-flex;
+      align-items: center;
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+    .lapaz .zone-label {
+      background: rgba(34,197,94,.16);
+      color: #bbf7d0;
+      border: 1px solid rgba(34,197,94,.35);
+    }
+    .piedras .zone-label {
+      background: rgba(56,189,248,.16);
+      color: #bae6fd;
+      border: 1px solid rgba(56,189,248,.35);
+    }
+    h3 {
+      margin: 0 0 10px;
+      font-size: 24px;
+      letter-spacing: -.02em;
+    }
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 8px 0 12px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .meta-row span {
+      background: var(--panel-2);
+      border: 1px solid var(--line);
+      padding: 6px 8px;
+      border-radius: 8px;
+    }
+    .coords {
+      display: inline-block;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      color: #e2e8f0;
+      background: #020617;
+      border: 1px solid #1f2937;
+      padding: 8px 10px;
+      border-radius: 9px;
+      margin: 6px 0 12px;
+    }
+    .source-files {
+      color: var(--subtle);
+      font-size: 13px;
+      word-break: break-word;
+      max-width: 640px;
+    }
+    .location-actions {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 12px;
+    }
+    .button {
+      display: block;
+      text-decoration: none;
+      text-align: center;
+      border-radius: 12px;
+      padding: 14px 12px;
+      font-weight: 850;
+      color: #04111f;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, .24);
+    }
+    .button.primary { background: var(--green); }
+    .button.secondary { background: var(--blue); }
+    footer {
+      color: var(--subtle);
+      border-top: 1px solid var(--line);
+      margin-top: 34px;
+      padding-top: 18px;
+      font-size: 13px;
+    }
+    @media (max-width: 920px) {
+      .location-card {
+        grid-template-columns: 290px 1fr;
+      }
+      .location-actions {
+        grid-column: 1 / -1;
+        flex-direction: row;
+      }
+      .button {
+        flex: 1;
+      }
+    }
+    @media (max-width: 680px) {
+      header { padding: 22px 14px 18px; }
+      main { padding: 14px; }
+      .location-card {
+        grid-template-columns: 1fr;
+        padding: 12px;
+      }
+      .photo-wrap img {
+        height: 260px;
+      }
+      .location-actions {
+        flex-direction: column;
+      }
+    }
+  </style>
 </head>
 <body>
-<header><h1>Locaciones de Jona</h1><p class="muted">Recorrido sugerido: La Paz / Lezica-Melilla → Las Piedras.</p><div class="intro"><p><b>Material de referencia para segunda vuelta de scouting.</b></p><p class="muted">Cada locación incluye referencia visual de mapa, coordenadas tomadas del GPS de las fotos y accesos directos a Google Maps. Los comentarios del equipo los vamos a resolver aparte en Drive/Sheet.</p></div></header>
-<main>
-<h2>La Paz / Lezica-Melilla</h2>
-<article class="loc"><div class="visual"><iframe loading="lazy" src="https://maps.google.com/maps?q=-34.763729,-56.225765&z=17&output=embed"></iframe><p class="caption">Referencia visual · IMG_4588.HEIC</p></div><div><span class="pill lp">La Paz / Lezica-Melilla</span><h3>Locación Jona 01</h3><p class="meta">6 fotos · 15:26–16:02 · IMG_4588 a IMG_4616</p><p class="coords">-34.763729, -56.225765</p><details><summary>Fotos asociadas</summary><p class="meta files">IMG_4588.HEIC IMG_4589.HEIC IMG_4590.HEIC IMG_4591.HEIC IMG_4615.HEIC IMG_4616.HEIC</p></details></div><div class="actions"><a class="btn" target="_blank" href="https://www.google.com/maps/dir/?api=1&destination=-34.763729,-56.225765&travelmode=driving">Navegar</a><a class="btn secondary" target="_blank" href="https://www.google.com/maps?q=-34.763729,-56.225765">Ver en Google Maps</a></div></article>
-<article class="loc"><div class="visual"><iframe loading="lazy" src="https://maps.google.com/maps?q=-34.763733,-56.229056&z=17&output=embed"></iframe><p class="caption">Referencia visual · IMG_4592.HEIC</p></div><div><span class="pill lp">La Paz / Lezica-Melilla</span><h3>Locación Jona 02</h3><p class="meta">3 fotos · 15:31 · IMG_4592 a IMG_4594</p><p class="coords">-34.763733, -56.229056</p><details><summary>Fotos asociadas</summary><p class="meta files">IMG_4592.HEIC IMG_4593.HEIC IMG_4594.HEIC</p></details></div><div class="actions"><a class="btn" target="_blank" href="https://www.google.com/maps/dir/?api=1&destination=-34.763733,-56.229056&travelmode=driving">Navegar</a><a class="btn secondary" target="_blank" href="https://www.google.com/maps?q=-34.763733,-56.229056">Ver en Google Maps</a></div></article>
-<article class="loc"><div class="visual"><iframe loading="lazy" src="https://maps.google.com/maps?q=-34.763479,-56.229963&z=17&output=embed"></iframe><p class="caption">Referencia visual · IMG_4595.HEIC</p></div><div><span class="pill lp">La Paz / Lezica-Melilla</span><h3>Locación Jona 03</h3><p class="meta">3 fotos · 15:33–15:34 · IMG_4595 a IMG_4597</p><p class="coords">-34.763479, -56.229963</p><details><summary>Fotos asociadas</summary><p class="meta files">IMG_4595.HEIC IMG_4596.HEIC IMG_4597.HEIC</p></details></div><div class="actions"><a class="btn" target="_blank" href="https://www.google.com/maps/dir/?api=1&destination=-34.763479,-56.229963&travelmode=driving">Navegar</a><a class="btn secondary" target="_blank" href="https://www.google.com/maps?q=-34.763479,-56.229963">Ver en Google Maps</a></div></article>
-<article class="loc"><div class="visual"><iframe loading="lazy" src="https://maps.google.com/maps?q=-34.762886,-56.229999&z=17&output=embed"></iframe><p class="caption">Referencia visual · IMG_4598.HEIC</p></div><div><span class="pill lp">La Paz / Lezica-Melilla</span><h3>Locación Jona 04</h3><p class="meta">2 fotos · 15:35 · IMG_4598 a IMG_4599</p><p class="coords">-34.762886, -56.229999</p><details><summary>Fotos asociadas</summary><p class="meta files">IMG_4598.HEIC IMG_4599.HEIC</p></details></div><div class="actions"><a class="btn" target="_blank" href="https://www.google.com/maps/dir/?api=1&destination=-34.762886,-56.229999&travelmode=driving">Navegar</a><a class="btn secondary" target="_blank" href="https://www.google.com/maps?q=-34.762886,-56.229999">Ver en Google Maps</a></div></article>
-<article class="loc"><div class="visual"><iframe loading="lazy" src="https://maps.google.com/maps?q=-34.761736,-56.228847&z=17&output=embed"></iframe><p class="caption">Referencia visual · IMG_4601.HEIC</p></div><div><span class="pill lp">La Paz / Lezica-Melilla</span><h3>Locación Jona 05</h3><p class="meta">2 fotos · 15:40 · IMG_4601 a IMG_4602</p><p class="coords">-34.761736, -56.228847</p><details><summary>Fotos asociadas</summary><p class="meta files">IMG_4601.HEIC IMG_4602.HEIC</p></details></div><div class="actions"><a class="btn" target="_blank" href="https://www.google.com/maps/dir/?api=1&destination=-34.761736,-56.228847&travelmode=driving">Navegar</a><a class="btn secondary" target="_blank" href="https://www.google.com/maps?q=-34.761736,-56.228847">Ver en Google Maps</a></div></article>
-<article class="loc"><div class="visual"><iframe loading="lazy" src="https://maps.google.com/maps?q=-34.760739,-56.228872&z=17&output=embed"></iframe><p class="caption">Referencia visual · IMG_4603.HEIC</p></div><div><span class="pill lp">La Paz / Lezica-Melilla</span><h3>Locación Jona 06</h3><p class="meta">2 fotos · 15:42 · IMG_4603 a IMG_4604</p><p class="coords">-34.760739, -56.228872</p><details><summary>Fotos asociadas</summary><p class="meta files">IMG_4603.HEIC IMG_4604.HEIC</p></details></div><div class="actions"><a class="btn" target="_blank" href="https://www.google.com/maps/dir/?api=1&destination=-34.760739,-56.228872&travelmode=driving">Navegar</a><a class="btn secondary" target="_blank" href="https://www.google.com/maps?q=-34.760739,-56.228872">Ver en Google Maps</a></div></article>
-<article class="loc"><div class="visual"><iframe loading="lazy" src="https://maps.google.com/maps?q=-34.759807,-56.228943&z=17&output=embed"></iframe><p class="caption">Referencia visual · IMG_4605.HEIC</p></div><div><span class="pill lp">La Paz / Lezica-Melilla</span><h3>Locación Jona 07</h3><p class="meta">6 fotos · 15:44–15:45 · IMG_4605 a IMG_4610</p><p class="coords">-34.759807, -56.228943</p><details><summary>Fotos asociadas</summary><p class="meta files">IMG_4605.HEIC IMG_4606.HEIC IMG_4607.HEIC IMG_4608.HEIC IMG_4609.HEIC IMG_4610.HEIC</p></details></div><div class="actions"><a class="btn" target="_blank" href="https://www.google.com/maps/dir/?api=1&destination=-34.759807,-56.228943&travelmode=driving">Navegar</a><a class="btn secondary" target="_blank" href="https://www.google.com/maps?q=-34.759807,-56.228943">Ver en Google Maps</a></div></article>
-<article class="loc"><div class="visual"><iframe loading="lazy" src="https://maps.google.com/maps?q=-34.759128,-56.228285&z=17&output=embed"></iframe><p class="caption">Referencia visual · IMG_4611.HEIC</p></div><div><span class="pill lp">La Paz / Lezica-Melilla</span><h3>Locación Jona 08</h3><p class="meta">2 fotos · 15:47 · IMG_4611 a IMG_4612</p><p class="coords">-34.759128, -56.228285</p><details><summary>Fotos asociadas</summary><p class="meta files">IMG_4611.HEIC IMG_4612.HEIC</p></details></div><div class="actions"><a class="btn" target="_blank" href="https://www.google.com/maps/dir/?api=1&destination=-34.759128,-56.228285&travelmode=driving">Navegar</a><a class="btn secondary" target="_blank" href="https://www.google.com/maps?q=-34.759128,-56.228285">Ver en Google Maps</a></div></article>
-<article class="loc"><div class="visual"><iframe loading="lazy" src="https://maps.google.com/maps?q=-34.760522,-56.225763&z=17&output=embed"></iframe><p class="caption">Referencia visual · IMG_4613.HEIC</p></div><div><span class="pill lp">La Paz / Lezica-Melilla</span><h3>Locación Jona 09</h3><p class="meta">2 fotos · 15:56 · IMG_4613 a IMG_4614</p><p class="coords">-34.760522, -56.225763</p><details><summary>Fotos asociadas</summary><p class="meta files">IMG_4613.HEIC IMG_4614.HEIC</p></details></div><div class="actions"><a class="btn" target="_blank" href="https://www.google.com/maps/dir/?api=1&destination=-34.760522,-56.225763&travelmode=driving">Navegar</a><a class="btn secondary" target="_blank" href="https://www.google.com/maps?q=-34.760522,-56.225763">Ver en Google Maps</a></div></article>
-<article class="loc"><div class="visual"><iframe loading="lazy" src="https://maps.google.com/maps?q=-34.763665,-56.224144&z=17&output=embed"></iframe><p class="caption">Referencia visual · IMG_4617.HEIC</p></div><div><span class="pill lp">La Paz / Lezica-Melilla</span><h3>Locación Jona 10</h3><p class="meta">2 fotos · 16:04 · IMG_4617 a IMG_4618</p><p class="coords">-34.763665, -56.224144</p><details><summary>Fotos asociadas</summary><p class="meta files">IMG_4617.HEIC IMG_4618.HEIC</p></details></div><div class="actions"><a class="btn" target="_blank" href="https://www.google.com/maps/dir/?api=1&destination=-34.763665,-56.224144&travelmode=driving">Navegar</a><a class="btn secondary" target="_blank" href="https://www.google.com/maps?q=-34.763665,-56.224144">Ver en Google Maps</a></div></article>
-<h2>Las Piedras</h2>
-<article class="loc"><div class="visual"><iframe loading="lazy" src="https://maps.google.com/maps?q=-34.725643,-56.217147&z=17&output=embed"></iframe><p class="caption">Referencia visual · IMG_4619.HEIC</p></div><div><span class="pill lsp">Las Piedras</span><h3>Locación Jona 11</h3><p class="meta">2 fotos · 16:30–16:31 · IMG_4619 a IMG_4620</p><p class="coords">-34.725643, -56.217147</p><details><summary>Fotos asociadas</summary><p class="meta files">IMG_4619.HEIC IMG_4620.HEIC</p></details></div><div class="actions"><a class="btn" target="_blank" href="https://www.google.com/maps/dir/?api=1&destination=-34.725643,-56.217147&travelmode=driving">Navegar</a><a class="btn secondary" target="_blank" href="https://www.google.com/maps?q=-34.725643,-56.217147">Ver en Google Maps</a></div></article>
-<article class="loc"><div class="visual"><iframe loading="lazy" src="https://maps.google.com/maps?q=-34.724747,-56.217196&z=17&output=embed"></iframe><p class="caption">Referencia visual · IMG_4621.HEIC</p></div><div><span class="pill lsp">Las Piedras</span><h3>Locación Jona 12</h3><p class="meta">4 fotos · 16:36–16:37 · IMG_4621 a IMG_4624</p><p class="coords">-34.724747, -56.217196</p><details><summary>Fotos asociadas</summary><p class="meta files">IMG_4621.HEIC IMG_4622.HEIC IMG_4623.HEIC IMG_4624.HEIC</p></details></div><div class="actions"><a class="btn" target="_blank" href="https://www.google.com/maps/dir/?api=1&destination=-34.724747,-56.217196&travelmode=driving">Navegar</a><a class="btn secondary" target="_blank" href="https://www.google.com/maps?q=-34.724747,-56.217196">Ver en Google Maps</a></div></article>
-<article class="loc"><div class="visual"><iframe loading="lazy" src="https://maps.google.com/maps?q=-34.729806,-56.222681&z=17&output=embed"></iframe><p class="caption">Referencia visual · IMG_4625.HEIC</p></div><div><span class="pill lsp">Las Piedras</span><h3>Locación Jona 13</h3><p class="meta">1 foto · 16:46 · IMG_4625</p><p class="coords">-34.729806, -56.222681</p><details><summary>Fotos asociadas</summary><p class="meta files">IMG_4625.HEIC</p></details></div><div class="actions"><a class="btn" target="_blank" href="https://www.google.com/maps/dir/?api=1&destination=-34.729806,-56.222681&travelmode=driving">Navegar</a><a class="btn secondary" target="_blank" href="https://www.google.com/maps?q=-34.729806,-56.222681">Ver en Google Maps</a></div></article>
-<article class="loc"><div class="visual"><iframe loading="lazy" src="https://maps.google.com/maps?q=-34.727578,-56.221481&z=17&output=embed"></iframe><p class="caption">Referencia visual · IMG_4626.HEIC</p></div><div><span class="pill lsp">Las Piedras</span><h3>Locación Jona 14</h3><p class="meta">3 fotos · 16:48–16:49 · IMG_4626 a IMG_4628</p><p class="coords">-34.727578, -56.221481</p><details><summary>Fotos asociadas</summary><p class="meta files">IMG_4626.HEIC IMG_4627.HEIC IMG_4628.HEIC</p></details></div><div class="actions"><a class="btn" target="_blank" href="https://www.google.com/maps/dir/?api=1&destination=-34.727578,-56.221481&travelmode=driving">Navegar</a><a class="btn secondary" target="_blank" href="https://www.google.com/maps?q=-34.727578,-56.221481">Ver en Google Maps</a></div></article>
-<article class="loc"><div class="visual"><iframe loading="lazy" src="https://maps.google.com/maps?q=-34.722098,-56.211445&z=17&output=embed"></iframe><p class="caption">Referencia visual · IMG_4629.HEIC</p></div><div><span class="pill lsp">Las Piedras</span><h3>Locación Jona 15</h3><p class="meta">3 fotos · 16:58 · IMG_4629 a IMG_4631</p><p class="coords">-34.722098, -56.211445</p><details><summary>Fotos asociadas</summary><p class="meta files">IMG_4629.HEIC IMG_4630.HEIC IMG_4631.HEIC</p></details></div><div class="actions"><a class="btn" target="_blank" href="https://www.google.com/maps/dir/?api=1&destination=-34.722098,-56.211445&travelmode=driving">Navegar</a><a class="btn secondary" target="_blank" href="https://www.google.com/maps?q=-34.722098,-56.211445">Ver en Google Maps</a></div></article>
-</main>
+  <header>
+    <div class="header-inner">
+      <h1>Locaciones de Jona</h1>
+      <p class="subtitle">Material de referencia para la segunda vuelta de scouting. Orden: La Paz / Lezica-Melilla primero; Las Piedras después.</p>
+      <div class="version">v2026-06-21-01</div>
+    </div>
+  </header>
+
+  <main>
+    <h2>La Paz / Lezica-Melilla</h2>
+    <p class="section-note">Locaciones registradas en la primera zona del scouting.</p>
+    
+      <article class="location-card lapaz">
+        <div class="photo-wrap">
+          <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAoHBwgHBgoICAgLCgoLDhgQDg0NDh0VFhEYIx8lJCIfIiEmKzcvJik0KSEiMEExNDk7Pj4+IiNGQ0xWSkZSQDk+Pv/AABEIAO0A9AMBIgACEQEDEQH/xAAcAAABBQEBAQAAAAAAAAAAAAAAAQQFBgcDAgj/xABGEAACAQIDAwYEBwcCBgEFAAAAARECAwQhMQUSQVFhBhMicYGRoTKxwfAHQlJicuHxExUkQ2KCkrLS8RZTwjNDZIODk//EABoBAAIDAQEAAAAAAAAAAAAAAAIDAAEEBQb/xAAzEQACAQIDBQUHAwUAAAAAAAAAAQIDEQQhEjFBUSIyYYGRobHwBRNCUmLB0fHhM5Lx/9oADAMBAAIRAxEAPwD5rxpKgIAAAAAAAAAAAAAAAbUeQfe0LFs3oAQgb95d95r/ABK/9nJ+vNMutguIbJgdy7bVKmRtqIo7pFdZuqI2fvjfTRr8bv8AEszxSt+NW3vWmn0f6oV2qs6yW81/wC1X+ESKO/Nf03Yz/WdjPzRr7HXJlYg3Tk9+2a3APW9eNRo54rXfa7iR31AJU80Tq1VDx5E7dplp/GTTpw/z7bGIb+45P+Na6zhtSA4fm7nHQF6b+TJZKxPq2B6ViOKl8SXFC3K85pkLkN4kocVTMq36e4y51uLGaU+7NWsXS3bO6hm0q8ht0qSFx9PRim/Wx3B45O1v6sLcdKMz0xSxjAZDP0yMhS6h0BNX3NtJyzmT/J/F08mry25gY6itV8iHdDPAAAgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH7aeDnZFKGSJ0vppY3FT1K0Vz+fnvyfdqGUB0nvFd/Sn5kblZWt1d/ddYjVZduXM8XbdD42o51pdAZs1d1d+PW34Hp1s2Qux/LV2VjyeNNNyO8ANpqFA7waS1ccy3FP4VPMm+aDAXw6y1ycMa0ryTfA1vEVk5NnhW34+Gp36+zZrHyTYS04OfLGFwWPkemz8zjFKvDqY3nLppq/1zb5MvDBnWk3Hmse3KVKNW8SnFLe3UnCM37VtipPqVy1peY2lHnpOPV7Jp+R6N+jmtYfW5WM18b6zv1uW11yn7BLJZUG6knNNRwm2EpSa1XT0/D9qba/RiJYcdho7jF4m/AyL8/MzEY9V/W7gXWBJfTdS19a7v58ae6ROOHhE/BsJ9jpSuvh7qdnqnSsQVxlKtSg1JPWTbs970oAOy+z+tk3TtqQdPzQe3UKH7h1Ofk09VVxdJwru1eTgC7BAAAAAAAAAAAAAAAAAAAAAAAAAAAHZDYy08ciGpV9KaVcLCNrpulJ6dBWZquhP5Mu+8jJwuPb+Y4VGMl0KKlFcOvPv1DP0T3Qva7rqhbY7bdpEhbadpfVShRUIR0e7Ol36kn+SkzaGWStpJNFRzO7ccjyOP7X+kM1Zu1m7booxkkont0pOm9XiRUc8mT6bvVb2ZKx28JsZzwMUbT/J99mqhUgnXnqaE7vyfLzTnf3HqTy+RehnGWzgZUYYG47xzlJuwjNad5ye/E80HTq1+QyuK4V010J/Dt6eR+CuGKBj4e9fJpLyw3eHhDy+1mRHyQdr04dg4eIsUW9vZL/muVfw5I7wXV+1bDYAAAAAAAAAAAKAGwOJwcS9I80cXChma6kiZvazm8PizWxVnK1qFJlpptNO9o5X6r81eyX1wJ+pjx9Vb0fk8s1FdQZVDY2rlS+9MWU/ZJ2uquj+NNx4qbeWFnfzNEiWNY/MjBSO7Xe3s03sK2laSssqyrqw+hFa17aaSRffLz75GOTNb5vnc+Wr+Ynn8p7KNd34F+1c8T7HXhfBn3TRzggo4uN7/APslOrzecY6e8juuKbfprQjNL4vE85/M6+jV7Xr2pfe47ydLhJbns8SSW/C+3x/BplN/GVV96ek5fP2++b5orHRxl/ZvuLdY+WmyrywvL4yj9v0+U5O2V+oPL6fw+Mc5beUe3bZ2vYyON5fSTcmecx9D6dXYuTxnbhTXxno9PdbbkqQe9GznBvBr5MR3TOnfkB2P2VnU61mqk1aU445SUlZRWulc3tZXaJ1pe0jr0WxpJrYqNLUr+/rWj6nXaAAeyJZNitVa2X7No1OW3Sl7KKWlw/i/SsFooszF13VKg221GDV9KMcZSiXqr/lM/T3lt+fyK5P0bK93baVLJOm5V1foNaKbgiaUY70RsX5KNXkrW7K2ScfW/KRZJ6JN3PEUYTOYxwfWc9Ts81PS9DkT+XSZf4awtxeP5rbWZ/i2L1PQulX7sK1JYCm9X4fWs3fT0P0xWeC4luDnxpPOetn6a+VTWypxd4KSk9GVnuZfBv+Le3yAy2l2avifZZduilUxglONNNWD20npJa/Cd7yv6aOUrFKPX3osxVfatpmbrBUdRjFc+hFKPN47X3iiZmq+zP0bDRTlWb5lfoxt6b1npi1crOJWf0lbuNmk+oq/MTNvq0+EplGOy1cqlHOc05KLo7un+62hkpNwCNJdrlThBJ61NGSXupX92v0X+mu9i7a/UA2Ltq0FUtPSjGSTbN80pPc7Kz7AFgl2sbD4W+aizUr1sLVlhqT+Kk/Upwu/7AF1H69fBv6KjeXF2t+s4ilbpiq5TTjNp9Tcnpp7fk8ifyN96w6cPQ4r+0umh1rSOHpHXZpKTlvbbb5Rs16Fzyd3WMbWUp8KqbVn/Dopv4bN8/zSU7Lp20nxquanr+0yTb+A6WPy9GEkclSzOeq/U/dxJRXVwq82Tv36D1+J6dTDAAAAAAAAAABeM9lbb0ULkebSlDqNRjzdbWlra0tLUaX5ppc0rfV9El/iHTvXsVPf6e3n7mSLhyYdhqaH0Ype89O6MseWD6t2rYqeOz5lVV10rVN3RMjgNa+rKNtJPwRc7co24tS90fc+i5ir0MO3gLDrPF7lzRQrOUczWPJSoR6G9y6Xf13Gb/RMZu7Ve2qwTbkTSvKWlSbZe1MvtfBP2TE1KG/NHQ3JySE8Pl6FVVazVqUapYSinNLSVnNp5nbl5Scdf9qzHZQYxkuoxUN9xz+TKBlU4GUck2oty5R+D6vKkvQ/Q+GnT6muc/uecmm3fW6muw81Ek37UdJ800fJDSaW/rmPmlrvUum0dFV5dv0P1kjbOTbLL7v58V0x2fuh0ylHV3KfFZJW+L8mfbb3Anm4RufjWxp7vBzsqUad88dWcctHa13dXh0PP0szXNPN47mMhW1T10ZRnNrPVy+L8ztp7bhFROU2yXB5z04R3E86aO7/W9GfY+HV93/HS9Zx/TgAAAAAAAAB5HsuL+6PJciGyuv7WAinDg5qKfLb8hSD6sx7PPm8LN/Jh0Mvb7smg/K9ppfUQZkVpg3fk9V7P38p0zc8N9pl2aan5t/YPXSzWzX0/P9z0St4qcS64s3lCnxttqP3PWuWcfxPL6VuXyV9Szs2v+jTYWh+er1UVZ9aPny9tf1nfqzRNdZSlGRUlHklG1+SS0l98r2TP4eS7a4qYqEZOz38EI+ORXOJu8ydF8TWL01tHnVMxi4HsZdOGqlJRvJJ/hp/diEfuNs+TzyPZURjNQ2jC8Pi0KTjaaVMXgpbWSi5yiqOz2422yrzU6+UObXtJYu35adTVEFeS703fKW6+t5rvSvqDJcgwU2W6j8LNvHnfbvZVSz+Li++VfE9as9z98ZaDhZOn7MW3KWwclHX7NKe1j5NfTufcm0VVybKiuPcr9NF2uXi5Ppaqf9H3eVDt8P1t2odjhY1pU4r1UmutJT5KXiaW3Wd1f4tN69QDVcJlmwY04wTl0JNtHeTv1vr4rr8d9K2bf03ZZ+pzV1Taat6PEAAAAAAAAAAKZllHO4JXg6jFtqP5UiWCRK5dGTVvlnyf3LTzc4tH2tsqSkrSd7Tt+zO1w02h7Ghxm7Lp+079tsvdWsYl1ryXJcGzJcGJrXRdAMjR4lStVxW2p09aT907cWnVvyvSTHqy/BcuqXjLHSlycVsnaR71nOLtfRw7r+HbAAAAAAAAAAVzzpnZBnFEJOyE8u0paX79t2tC/j2uVDqbAGZW2nrGbfwpZSVK5GXE/1AXalKT81M0ZB9vB6nNxrtdXLUT+K+5P3XiW7q+Hvnbnmk61cTSl7w9pJM8jp+6uqR/0zL5ujf0A0v2iMgsjThWse0rmzeqUfae3xKdPr4lx7sAvNSuBcv4VqajRj28ET/hHtbT+uPhOy2JWcHTTktOMpPB9r6LuGr+Fdl/aTezWVd7OF8fszcqWcf4n0b+2VW0Mtn8KVGoRii3acIqS5yTu+0XXz7kS6p/4HdZm9wZrWqpu1PCksXKjNNQjLTU13EnN+fvz/E6DWYPGmlcZScoqVlr6lHl5wcb2n8uwM9lMOjSRlw0k4xV1KNXEzRlT6tvyPffW16EqNqKoAAAD3k4fBZ1LUAum5z9T5rnxYTbrlx4fFi0oyTTjKbzU92tZ+Ib9ap2jWI1+yr+yairVXOq3SoVK8tXFy4U6W+KtaEPfZGXs83InZNItj2ozV7PS5s0m7o2/u6/NaKL+nTvqzQva5uZpLu+RmZP1+0gvvOEXR4f1bbIfOyfo9kwAAAAACZ9HIyk4Nqz5s5yacpO010p+xBHxDNsxrtRhn0Hdmc6fSdd8eax33ZNYlr1Xvnmv/AO+VDt1yUbgk31zfJYT/Xm6vqbEpHUfwv6yefqnFwcdKd7U0jN+5E9Db7Im3KzmpmUpcfKj+rrb4+D96edzms/tO1P2g38TaLsfs7Xd406f/AFgZLWurGAkxUpJwq3rSeHJa8ke8f6a6U8q6pThqPSSdpJR8x4/E+aKwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD//Z" alt="Foto de referencia IMG_4588.HEIC" loading="lazy">
+          <div class="photo-caption">Foto de referencia: IMG_4588</div>
+        </div>
+        <div class="location-info">
+          <div class="zone-label">La Paz / Lezica-Melilla</div>
+          <h3>Locación Jona 01</h3>
+          <div class="meta-row"><span>6 fotos registradas</span><span>15:26–16:02</span></div>
+          <div class="coords">-34.763729, -56.225765</div>
+          <div class="source-files">Archivos: IMG_4588 IMG_4589 IMG_4590 IMG_4591 IMG_4615 IMG_4616</div>
+        </div>
+        <div class="location-actions">
+          <a class="button primary" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=-34.763729,-56.225765&travelmode=driving">Navegar</a>
+          <a class="button secondary" target="_blank" rel="noopener" href="https://www.google.com/maps?q=-34.763729,-56.225765">Ver en Google Maps</a>
+        </div>
+      </article>
+
+      <article class="location-card lapaz">
+        <div class="photo-wrap">
+          <img src="data:image/jpeg;base64,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" alt="Foto de referencia IMG_4592.HEIC" loading="lazy">
+          <div class="photo-caption">Foto de referencia: IMG_4592</div>
+        </div>
+        <div class="location-info">
+          <div class="zone-label">La Paz / Lezica-Melilla</div>
+          <h3>Locación Jona 02</h3>
+          <div class="meta-row"><span>3 fotos registradas</span><span>15:31–15:31</span></div>
+          <div class="coords">-34.763733, -56.229056</div>
+          <div class="source-files">Archivos: IMG_4592 IMG_4593 IMG_4594</div>
+        </div>
+        <div class="location-actions">
+          <a class="button primary" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=-34.763733,-56.229056&travelmode=driving">Navegar</a>
+          <a class="button secondary" target="_blank" rel="noopener" href="https://www.google.com/maps?q=-34.763733,-56.229056">Ver en Google Maps</a>
+        </div>
+      </article>
+
+      <article class="location-card lapaz">
+        <div class="photo-wrap">
+          <img src="data:image/jpeg;base64,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" alt="Foto de referencia IMG_4595.HEIC" loading="lazy">
+          <div class="photo-caption">Foto de referencia: IMG_4595</div>
+        </div>
+        <div class="location-info">
+          <div class="zone-label">La Paz / Lezica-Melilla</div>
+          <h3>Locación Jona 03</h3>
+          <div class="meta-row"><span>3 fotos registradas</span><span>15:33–15:34</span></div>
+          <div class="coords">-34.763479, -56.229963</div>
+          <div class="source-files">Archivos: IMG_4595 IMG_4596 IMG_4597</div>
+        </div>
+        <div class="location-actions">
+          <a class="button primary" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=-34.763479,-56.229963&travelmode=driving">Navegar</a>
+          <a class="button secondary" target="_blank" rel="noopener" href="https://www.google.com/maps?q=-34.763479,-56.229963">Ver en Google Maps</a>
+        </div>
+      </article>
+
+      <article class="location-card lapaz">
+        <div class="photo-wrap">
+          <img src="data:image/jpeg;base64,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" alt="Foto de referencia IMG_4598.HEIC" loading="lazy">
+          <div class="photo-caption">Foto de referencia: IMG_4598</div>
+        </div>
+        <div class="location-info">
+          <div class="zone-label">La Paz / Lezica-Melilla</div>
+          <h3>Locación Jona 04</h3>
+          <div class="meta-row"><span>2 fotos registradas</span><span>15:35–15:35</span></div>
+          <div class="coords">-34.762886, -56.229999</div>
+          <div class="source-files">Archivos: IMG_4598 IMG_4599</div>
+        </div>
+        <div class="location-actions">
+          <a class="button primary" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=-34.762886,-56.229999&travelmode=driving">Navegar</a>
+          <a class="button secondary" target="_blank" rel="noopener" href="https://www.google.com/maps?q=-34.762886,-56.229999">Ver en Google Maps</a>
+        </div>
+      </article>
+
+      <article class="location-card lapaz">
+        <div class="photo-wrap">
+          <img src="data:image/jpeg;base64,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" alt="Foto de referencia IMG_4601.HEIC" loading="lazy">
+          <div class="photo-caption">Foto de referencia: IMG_4601</div>
+        </div>
+        <div class="location-info">
+          <div class="zone-label">La Paz / Lezica-Melilla</div>
+          <h3>Locación Jona 05</h3>
+          <div class="meta-row"><span>2 fotos registradas</span><span>15:40–15:40</span></div>
+          <div class="coords">-34.761736, -56.228847</div>
+          <div class="source-files">Archivos: IMG_4601 IMG_4602</div>
+        </div>
+        <div class="location-actions">
+          <a class="button primary" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=-34.761736,-56.228847&travelmode=driving">Navegar</a>
+          <a class="button secondary" target="_blank" rel="noopener" href="https://www.google.com/maps?q=-34.761736,-56.228847">Ver en Google Maps</a>
+        </div>
+      </article>
+
+      <article class="location-card lapaz">
+        <div class="photo-wrap">
+          <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAoHBwgHBgoICAgLCgoLDhgQDg0NDh0VFhEYIx8lJCIfIiEmKzcvJik0KSEiMEExNDk7Pj4+IiNGQ0xWSkZSQDk+Pv/AABEIAO0A+AMBIgACEQEDEQH/xAAcAAEAAwEBAQEAAAAAAAAAAAAAAQUGBAMEAgj/xABEEAACAQMDAgQDBQYFBAMBAAABAgMEBREABiExEjJBUQcTImFxgZEyocHwQlKxFEODIiNicoKi0fFDY5Kysv/EABoBAAMBAQEBAAAAAAAAAAAAAAECAwQABQb/xAAtEQACAgICAgICAQQDAQAAAAAAAQIRAxIEITFBUWEFEyIycZGhscHwQlKx/9oADAMBAAIRAxEAPwD92p5pCkKAAAAAAAVVVROwBTs7k3t3MhUytKa5Mn/CzG+ZG6ZG1yz6MiNwAAAALNtlwbluxz0XTkdGVoxjNpQjCNKLtsxjmjl4RRtLhcvKGk7Thlry/qP50PVsg23nZU2Pm6ms92f3qe3xQatS5EoxsFGK8UUmpK2k2gZ0+239VAeUdrTV8+2+zj/mX9Vga9L4qqVLXvfEvy0ydT3eyyqy41IfK94v1q/klT56/lb0XYDQMAAAAAAAAACo4bJ6qasXLxi44cg/3e6y8nka6nKUe0E21Vv6LD5lpZouMViMn0tgx+EpR+B0ra2R6ul9pN1wryXRurPGcVfocbpPVs09HWXDOP4VfOXr9Kh+z/ADNB0n1CqnTjbeL+f0X+Zz63laZOVhj0zuDmsr/R4GM7xcy4tqkp9pKy3F1b2tqJnYCU6z9MAAAAACkYqVeUXzRff3U+yuPjk5tp4t2BEM1U4GOc2rPk76n8TaNeEl7+Wwva1/QD7OApS019PuN3lBIAKAAABV5BB44vX76cyMjBVlZ+rKx5AAAAAAAAAAAAAAAAAAA6f2Gjs1wq0nZ0UJTiuJKbS+yLta8zzVmx9MShGElGM3ZM5Xm0rxXEqhhZQjqvpWPlGyN9Pt0Q/fudTxb4SaaS0+5Lc/1ABdPXPmbjUqeGKPT3PLuZT4dxzqbx/8AI3ah9O8J/wBua0yv4sbKz4nV+Tg6n+p5AdL2StVTrqLh3qtN61S0lKNTVg7vkqbyuvefPO++VayAAAAAAAMvTui+2zM2KbjfRb5B9h5XMwY3SSdOUrsN68n7V6evz8Clty1J1Nxsk/eS9L8W6o+FZjbuZWmviX2Dr62yWX4VNIhyDrLihz7b+exG/pOJzTPwTVdGz31I+5b92NI8oc8rYu6fk109SV3OZ0q1q/2zfu8PViSJiAAAAAAAAAAAAAAAAAXXN8Da3bBiFSjHDmrSjBwtZrpOcz0lu7v2tBmczK5bcPE8Lb1IK10ruMdftKPjzWS+t/giyqur62uxTpLk31R+CT7n79rPc80pbEpcRrM4lPzStuZ7lLdpI/G3Xb5b2VuSU6jvtNa1PflA+Jc0z+eC/ls8w94AAAAAAAAACjbbkUnPvpcPWRc3xSljofrPyn+hTrhNnz2tI4qlPaz43avxnP5WXIJz1GAAAAAAAAAAAAAAAAAAAX2uWmbdFQrUoKcZSjJ8oK9tfyXvrmcesnFKe0sovvY9fvtZdG4ubUxU8NSdZPaRt93ar+9dRbgvV4aF6CnlSTd3u9qcN7k2uXQ+Zmw+N4tXQUrUU5KUYzUUoRdpOKb+/uc32QmZU1fS+Z++zoyjTla06cp8vFTsr64lFrsrmByx9v3xzF1R9lZd1rN7clF+F+H/amUeN6eqnCT5pbnk/uVTIAAAAAABb9Mpo2jU5QafsyVrn3tnXfeYWpWpcbwslCNJlrb0u+xLueN8nOl/wADVdfR+KysfSZ3xxPSpzpttNymutfjqzvkkmR1xAAAAAAAAAAAAAAAAAACws+vx+lVcH6p9do+n4jJcl16aSc3t7df3mgq6+n/NZ1OTJOW/wBMTTzydxC6qrLUAAAAAAAAAAAAUbjdR7/mPG5+LaSZY2d2ttoURQtKhyl2fFXtK1vrqze0dWC4l7xkyAAAAAAAAAAAAAAAAAAFddXGG16unFylzlm+ftJlRW+p5kPqjGH+I04sfBq5Sk9oRW38/SMzKWxvDbh6kfctt7s37J8mNj5Mzpjp1M+Kp85+J/NgNqUy/x3Jb/wADV+MfmaDg9u4U9pqVL1d+W0e53CbJu7rp1zcxo4Vqvk5SV23yR4s2UzbL9VHtY5/0YDk/BxlVltOVjyRZKwAAAAAAAAAAeY7JFXxLs8Z86e+fuPYrsz5s1h8GrU6HhD38V6+zUcmf0XlWDeoAVzeCrWk4q6sKPTcld96v8A6YAyJ2rjNwv/RJ//2mfU6tTg7uefqHxVLnpyTxe4rLqkIwAAAAAAAAAAAAAAAu2xk5x3n2inJrtlvotPbzQHT1w7D1GNLK9hJ+5t/gcuZL31xk0t27/Iybw5ptLzv8Aobstc60pXlZKMFEo2ci8+fMVP2sGfL2h+hNW0Z6072bcf50j6oprdXs+ey0htzDqnTq0m/tjUb8SqKG+sd/g32/VevAAAAAAAAAAAAOk4etQqeHiZO0rtcsX4eqdeZqd51+uU+PAw6uWqUYS5Vy/Epr7wDt6Z1jaUesdXb9mEZQnGVpwoPcS2s3fLsRyuyXSny2wbjftqv+050pe0+9x+kB53uOLXXQv7nQ6lfypb+mgR0AAAAAAAAAAAAAAAV+upJ2jGMd3Cs13tl53/nL/APrO5Dc+BxqpKuLjqLcq4pJrNf0mvpPGDkbujywhNxtMVuMsjKjSlDlvHFnF7Uv8ATldpPfoeu1bD47K5NOrWbplC3G1a+dxjU/RO3bzP6mfUYAAAAAAAAAAADke1qTFxxrVqzjElF3jE17lyT51LrHYUXKuctyXtMyq4YISlKwS8JXSne3l98xV82fTPWWn1JVJzV5dxkq07Jz6Xa3865X0ZT5njlW7u89KxNNK9hK4BTrFaCcnlG0bjtaHc0/qNTp/D+Q2nb6V6FMlOElJt9eV159G2/iAG1mIAAAAAAAAAAAFvHc+kunXRv8egx866W5uxVxUpK6sLaSfT7Tmz7Joi1WST57S3ueqr7OTXEmy2OtjsqNOftI8+NVf9HJP0wNrxoqTJ3aUvrx+ckHhuy1X+2y98+VJ/svUUtP6fUkv7+pBWuAAAAAAAAAG6LuvSkm1JW61e+kk8iaRuVS01xZ/MpJb3Wve+m0jdzlt/g4vFN+0cpStW3wbqx9Y+ZYgAAAAAAAAAAAAAAAQiWPe8rHUsfn35Q1eqxrU4RjFTfNW8y6/Je1HvAAAAABYFkY0iOVTu9iGRz/WKi3c+/PLU7cm6dahLwAAAAAAAAAAAAAAAABGc7VdU/rX+JySv0zsJrAvjaKuaj8K+5av5AuuAAAAAAAAAAAAAAAAAAAM53pwyT5M/S3u0wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//Z" alt="Foto de referencia IMG_4603.HEIC" loading="lazy">
+          <div class="photo-caption">Foto de referencia: IMG_4603</div>
+        </div>
+        <div class="location-info">
+          <div class="zone-label">La Paz / Lezica-Melilla</div>
+          <h3>Locación Jona 06</h3>
+          <div class="meta-row"><span>2 fotos registradas</span><span>15:42–15:42</span></div>
+          <div class="coords">-34.760739, -56.228872</div>
+          <div class="source-files">Archivos: IMG_4603 IMG_4604</div>
+        </div>
+        <div class="location-actions">
+          <a class="button primary" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=-34.760739,-56.228872&travelmode=driving">Navegar</a>
+          <a class="button secondary" target="_blank" rel="noopener" href="https://www.google.com/maps?q=-34.760739,-56.228872">Ver en Google Maps</a>
+        </div>
+      </article>
+
+      <article class="location-card lapaz">
+        <div class="photo-wrap">
+          <img src="data:image/jpeg;base64,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" alt="Foto de referencia IMG_4605.HEIC" loading="lazy">
+          <div class="photo-caption">Foto de referencia: IMG_4605</div>
+        </div>
+        <div class="location-info">
+          <div class="zone-label">La Paz / Lezica-Melilla</div>
+          <h3>Locación Jona 07</h3>
+          <div class="meta-row"><span>6 fotos registradas</span><span>15:44–15:45</span></div>
+          <div class="coords">-34.759807, -56.228943</div>
+          <div class="source-files">Archivos: IMG_4605 IMG_4606 IMG_4607 IMG_4608 IMG_4609 IMG_4610</div>
+        </div>
+        <div class="location-actions">
+          <a class="button primary" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=-34.759807,-56.228943&travelmode=driving">Navegar</a>
+          <a class="button secondary" target="_blank" rel="noopener" href="https://www.google.com/maps?q=-34.759807,-56.228943">Ver en Google Maps</a>
+        </div>
+      </article>
+
+      <article class="location-card lapaz">
+        <div class="photo-wrap">
+          <img src="data:image/jpeg;base64,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" alt="Foto de referencia IMG_4611.HEIC" loading="lazy">
+          <div class="photo-caption">Foto de referencia: IMG_4611</div>
+        </div>
+        <div class="location-info">
+          <div class="zone-label">La Paz / Lezica-Melilla</div>
+          <h3>Locación Jona 08</h3>
+          <div class="meta-row"><span>2 fotos registradas</span><span>15:47–15:47</span></div>
+          <div class="coords">-34.759128, -56.228285</div>
+          <div class="source-files">Archivos: IMG_4611 IMG_4612</div>
+        </div>
+        <div class="location-actions">
+          <a class="button primary" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=-34.759128,-56.228285&travelmode=driving">Navegar</a>
+          <a class="button secondary" target="_blank" rel="noopener" href="https://www.google.com/maps?q=-34.759128,-56.228285">Ver en Google Maps</a>
+        </div>
+      </article>
+
+      <article class="location-card lapaz">
+        <div class="photo-wrap">
+          <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAoHBwgHBgoICAgLCgoLDhgQDg0NDh0VFhEYIx8lJCIfIiEmKzcvJik0KSEiMEExNDk7Pj4+IiNGQ0xWSkZSQDk+Pv/AABEIAO0A+AMBIgACEQEDEQH/xAAdAAEAAgMBAQEBAAAAAAAAAAAAAwQBAgUGBwAI/8QAQxAAAgIBAgQDBgUCBAYDAQAAAQIDBBEABRIGIUFREzFhBxQicYGhMkLB8CNSUnKx0SNigoOSorLxNXOD0uH/xAAaAQEBAAMBAQAAAAAAAAAAAAABAgAEBQMG/8QAJxEBAAICAgEDAwUAAAAAAAAAAAECEQMEEiExQVFhMkJxgZHwBSL/2gAMAwEAAhEDEQA/AP34pinAAAAAAAAAAAAABVqxstl0dNOklTi99Oa3PpyT+kOdfbZvLuKfsuZ/fcj90N9pVlq8XbVxKzjCs1HWhVvO0bRPXPtfsjfRsu2GqNTi5UOX2hHyeG1r2jvJ7Gp87AAAAAA+1nI6Y1rWl9KL2/ozA6W2TZniXnRjDnHXaU49oOO3kdXxMLz2mu37pMbrROQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ9QSa4uPJB3LXU4F1Uy6Vaj0HPeUYeTjfkfFbKvOMsu3y5JuzfP40Q0IZTc48m45F82r6VfT1999fGoiK7VfPQ9Zg8mjCRlqKNu+4IpWPpN6Tb5M78DMDmv7qcrw5pQtPILefKtj/AOU10fuOU1jU4q0d3k2/cZKM4LnZgAAAAAAAAAAAAAAAAAAAAB3zs9xd7loPfTpqlTXN/eM8+p+Q6/e2x+iAU9h1SasHNmcn7r8l/NZghjvj67jLkvwI8cZf6tcT/RtEq25f4akKPlkYnU/RxK7JAAAAAAAAAAAAfquY2YitRlZyr/AOdL7fvJsze3KgU17AAAAAAAAAAAAAA4K0zwbYcX2pqJ3R9Fs/xEz+3vskktYwAAAAAAAAAAnbV33R7FeNaVTtoOHTVpSSfe/JiUfu0V5uVvt1+ozz/UrJXkzw4tzXdcVc0kjzVv5T0nZ0xrVuKqpWH+pZ7bfKM2szkLr62AAAF/0jveWt+L+4xwFdOnTo049iEXtNP60mYCQAAAAAAAAAAAAAAAAE7vi+uT0q7ZQfDO+L6Sdd888srlajxTkpOULWWvYkn43TfuozaqnjJ69qf+zUPWgzqzTOavf7e5MNzs26LU5eUY2q+h+/9pmZzHK1ZiAAAAAAAAAAAAAAAAAAAAAAfgujpRjSleKV3OT/ktyPl8p1+fgf6yi5Gs52hPlydWppRVhSN/FSpX16cd+F5OJsRk5V1Gfg5KrJUo8/5dCv8xXw4lMeA7AypZXHpUvGM4rtL6Ri6d6Y/LalOOjy5rqmq/bZFqr2Js2vnXmX1wHOOT7xxNNbzN2WyMmpzw3Mqlm6dFJzP3aCz+kaUhVtfLM/B1fnoRlSUZpyacyTtuqqXeJ5fBGMu1Vn3MkpWtF2qTklRXrXr7ry75e9vx6Hh+19HlG5vdWZ97ovSu0G+y6vG4cWnUjHGT5SfSm7x7+llsfCvGz0XTdqUZUqQvC3f1bW+WuSSQTgVJYQAAAAAAAAAAAAAAADiMcrU8l7jOpw+Y2oOGx4JyjGKTfO7OuftNGrBycOWN/4dXh4ylzUwpVbT9tKMYx2SUnn/yusXb4ngFvay1GJVnQk5fvZrfd2m8PL5enxLdZs0YQ+fAr5X3/S8/HveoFym+J3K9Xw45NXdJyX2n8VXdpJ3K3gxT8PdnFYzoePXjaCOHlVFYhTTXlrr2SvxPqkqubW95/d5nFO0qjy6zxrVJxe9WR9QfxJy3OCdaf4X5MWd3ONZS94mJWkoyl3zTT23k+JTyd03xPbtADyviNNi97pW0p2Vr36+xOdo0S67qoyAAAAAAAAAAAAAAAAAAAA6i5WHxcmhp2j/tOcrq+CS7eptzOo3A0+ezd+iA+U4mx2hw08J+itBxeX/f3PHOU+M7qJFFuT6Wu4sj1rcLWzvKV5rdv8ATOxur2Ix0/DZnaJXUpWZp1Vm+6XuN1X0zpfCOWo0I4ehHapGCPu8jxN/LyPSxZX4amX5kdn+erTsd4OHao33ksrvN/0lFi9v7KT4jZ8Bws5n1eHR8715d5X/AIvh29Z2AAAAAYdsq7B0a0FK4VFGEcr9y/gNpMz1ZThB1+pdSpFNOc+Vwuffp9ujsb8gY628qvEAAAAAAAAAIAAvufCr8J1GOtH7y1f64H17l2vx2q0HSl1qlUvi+0rr725+/p6OzLUiSrAAAAAC2KvVfXrKrG6KShqxlq8eWdePI1MJ7NRnZzqPWUnC/oRY8BJU68q9hHxc0/rz0fbeKA0WZQAAAAAAAAAAAAAAAAAEJZu7VqjSTxEqoybuzSpxSvJdlG+98kpV79ERik64Gu1FVl4OT9Z3Rp9UgYm9PtAvdq9qU0qEVKtSjFOTc2uZfctxO+uJwnQMhmAAAAAAAAAAAAAAAAAAAAAAAM5Z+1KLKKhjKeLRjvT/wCd8tUdj/RtL1z4PwbF8OsxWbbI+HJxTqfrP9m9vh1ZnfwGn9l73eorMR3+08/Ks8dX5Z47yLK2xq0Y2lXVvKzg+wfULJWKAAAAAAZ2vNHpcz61oebUzLfnVg1KXQx8J9v0S4QnDHbZWoAAAAAAAAAAAID4a+I8WrVKXzLtXWBHhVtJW6elGuBC7MYZVqUU5N712s6k8pASQkAAAAAAAAAAAAAAAAAAAAAAAAEz4VV+HZlGKkHKa1v4HM5+i+rUeEXLVR7VKS+l5MrVj/Jzo0TsAAAAAAAB//9k=" alt="Foto de referencia IMG_4613.HEIC" loading="lazy">
+          <div class="photo-caption">Foto de referencia: IMG_4613</div>
+        </div>
+        <div class="location-info">
+          <div class="zone-label">La Paz / Lezica-Melilla</div>
+          <h3>Locación Jona 09</h3>
+          <div class="meta-row"><span>2 fotos registradas</span><span>15:56–15:56</span></div>
+          <div class="coords">-34.760522, -56.225763</div>
+          <div class="source-files">Archivos: IMG_4613 IMG_4614</div>
+        </div>
+        <div class="location-actions">
+          <a class="button primary" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=-34.760522,-56.225763&travelmode=driving">Navegar</a>
+          <a class="button secondary" target="_blank" rel="noopener" href="https://www.google.com/maps?q=-34.760522,-56.225763">Ver en Google Maps</a>
+        </div>
+      </article>
+
+      <article class="location-card lapaz">
+        <div class="photo-wrap">
+          <img src="data:image/jpeg;base64,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" alt="Foto de referencia IMG_4617.HEIC" loading="lazy">
+          <div class="photo-caption">Foto de referencia: IMG_4617</div>
+        </div>
+        <div class="location-info">
+          <div class="zone-label">La Paz / Lezica-Melilla</div>
+          <h3>Locación Jona 10</h3>
+          <div class="meta-row"><span>2 fotos registradas</span><span>16:04–16:04</span></div>
+          <div class="coords">-34.763665, -56.224144</div>
+          <div class="source-files">Archivos: IMG_4617 IMG_4618</div>
+        </div>
+        <div class="location-actions">
+          <a class="button primary" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=-34.763665,-56.224144&travelmode=driving">Navegar</a>
+          <a class="button secondary" target="_blank" rel="noopener" href="https://www.google.com/maps?q=-34.763665,-56.224144">Ver en Google Maps</a>
+        </div>
+      </article>
+
+
+    <h2>Las Piedras</h2>
+    <p class="section-note">Locaciones registradas en la segunda zona del scouting.</p>
+    
+      <article class="location-card piedras">
+        <div class="photo-wrap">
+          <img src="data:image/jpeg;base64,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" alt="Foto de referencia IMG_4619.HEIC" loading="lazy">
+          <div class="photo-caption">Foto de referencia: IMG_4619</div>
+        </div>
+        <div class="location-info">
+          <div class="zone-label">Las Piedras</div>
+          <h3>Locación Jona 11</h3>
+          <div class="meta-row"><span>2 fotos registradas</span><span>16:30–16:31</span></div>
+          <div class="coords">-34.725643, -56.217147</div>
+          <div class="source-files">Archivos: IMG_4619 IMG_4620</div>
+        </div>
+        <div class="location-actions">
+          <a class="button primary" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=-34.725643,-56.217147&travelmode=driving">Navegar</a>
+          <a class="button secondary" target="_blank" rel="noopener" href="https://www.google.com/maps?q=-34.725643,-56.217147">Ver en Google Maps</a>
+        </div>
+      </article>
+
+      <article class="location-card piedras">
+        <div class="photo-wrap">
+          <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAoHBwgHBgoICAgLCgoLDhgQDg0NDh0VFhEYIx8lJCIfIiEmKzcvJik0KSEiMEExNDk7Pj4+IiNGQ0xWSkZSQDk+Pv/AABEIAO0A+AMBIgACEQEDEQH/xAAbAAEAAwEBAQEAAAAAAAAAAAABBAUGAwIAB//EAEAQAQACAQIEAwYEBQQABgMAAAECAxEABCExBRJBUWFxBhMicYGRMlKxwfAHExQiI0JSYoKishWR0eEzNUOC/8QAGgEBAAMBAQEAAAAAAAAAAAAAAAEDBAACBf/EACQRAAICAgICAQUBAAAAAAAAAAABAhEDIRIxQQRRYXGBkbHw/9oADAMBAAIRAxEAPwD9ZymqgAABVNNk0m+6xy3vGwce4BsnjbGbZX0nX3OnmHbTBE5DI0ohkXBZVZAcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZSwlNNtpUo/Hh5F9JY+QVYXJ+1GXT3amvZf3vp+o+ZuRGbwxs2I0c0NVUbfp/utM+fM2Vzh+qdNxhFfdqJb3nJPvp9vM0pQN/wBlv8Oox6M5uSvuTx0Ul3tfpOXqTBH2nZlWbts0TiHmVUK5jHcltf0TR9R92UFtmZ1S6lwtR7Hpb3nuc9XnZr2aMpmgAAAAAAAAAAAAAAAAAAAAAAfX8f0tQpJf0oM/0zP0mh07tMwqQ9tpyUJR81d/ZlcrNp6h1T7Lf0nb8z2S6FP9VOlKjvI3+69/1M9m5UqO4PpJEqqwzAAAAAAAAAAAAAAAAAAAAAAPr9GVN3gq5q7v2fZJsFjzLX0zjMMPdspKTi4ucvOT7Oa3M1tuR6PT0jSmn0Le0+UedyvrMW4bjvm1KT1TrPbURDpAAAAAAAAAAAAAAAAAAAAAAADsbtw5rTdo+FjXO0nC5fi6Y3tpZkGn7Eu2aNTXqJOMpc87jR2sr6iM8/rU8A+hsmKzYlwtd1jVqVI2WtLzTT0nHPpydEzNjwWZVT+p7P4Nv+qvJjZFKcUm/vl6d/6h9Qbmhdzfs58l7loB0/h9Rd/koZmgAAAAAAAAAAAAAAAN1tqi1VUOVJpu78i/0lXySczfOeYAAAAAAAAAAAAAAAAAAKZ9rXDFteb1jjj2ur+z7lyTv3Z/Bx2Zu45GlFzwYvzGkVsBYe3pr0J09rgm9FLO0bcXpd7nmK2umyy3njJVOy1d9rhFrOTe8kuTuo+xaZir4lLq5/7NQ+xw1R3ju7USb+A1rsDV48nqT2/wA/P76z7T0d9wvun57ct/HLx/KRy3ZtgIqTqVE/9GogIYCAAAAAAAAAAAAAAAAABp+1LST+FKe71l27H80A5vlnvWan/AA0t/U/oWbMLnMWMMYeCHs9yTV8DoKoYYlOfz/FU/yL6Z6uoybM6JebktLqN782f4vKeTdHn47BKxYx4fnJJaep8yd/g19pDDMZOKgnpa76/oJc8k2fxunxAez5pNbVSyJr03vnyRsKjd/KgAAAAAAAAAAAAAAAAAAADY2uKrU465T2dFU6fDvhO22WvL29gH2mP+5eh5J5b6f8AT+RfMMazUpJqtqoN1opKcV1eKVpLltI1bVdvR4teVnJ+jmg+d7bqMZqMKjh56sV1F/wCi8mH1UhX4hmIPa5JNaX1dj89n0aEOa+XSyZP9aqGl/dXWL+XX9M9l2J2asfLMTXXia5JMR8EAAI4AAAAAAAAAAAAAAAAAAkPy0maV42PGrCp1i0nkuiX3klzAn6ZlFq651T3cqtN6Lq3ktZp2SGTuZSvplt4AAAXfDTci38nhv3mVmzv4KHGpGNNxVlDl6D8yyx5zowPQmtTyfS82fuTYtLoAAAAAAAAAAAAAAAAAM5Yag2bRk+HOOVHfZ/VPmJ1kgAAAAABf94cFMlHjJ8ufm26Pqik78fydAtGOiYrl5SlZwSinm6/wJtIHvW2E69ryjvp0Ls/NJXXo2FpWuluj8ITipaaV4vzNvnv5jBdoN0gAAAAAAAAAAnPLdUovGLrfKt2ZGzhhbenFeMl9W8iVfh+lb9nrYLaXG1Cj/HJT+VEzA1zId56MBwScXNRj/JKfytm+60WjWyWX3WDLAvDAAAAAAAAAAAAAAG02fuo8bfk01/E9RXq2JHSwTnXXxK2DeyOex6Dk11Rp01+h5/TpLYcX4ji3/fWcl7cVZxA3bhgAAAAAAAAAAAAfV6VKeW2q/w/CTH9gBWNU12BBmZtDPjBY42aTy79UpP1xWSmNFjI6dTo1I9d4efqbc3pao+JeSzK47WGumAAAAAAAAABNx4ScHpOKTmqf4QHltT2/GT0rmYDdHCOis2UsEpxc4ukfjL/ABXk9uXF0j/4oi8A2vFQAAAAAAAABS08uad1uPCfEyfxYSJ4GbL/ABZ0+JqlTvszcv4Zvq3+SkfKumthAAAAAAAAAAAAALBnDLUfGMczfvbXUr+KWPlJ+QDb6KEAAAAAAe78Znbvm70lbRcIrAAAAAAAe5LPQ6VNcnTq4JLzbXjJ2dv6Z1tLUpKP6p3W+b9SxNqoLk7AAAAAAAAAAAAAAAAD5TJ49D0lLzVpHdY70j/L8z2+nlQQEAAAAAAAAAAAAAAARiIqiMnlJ49cZO2km+SDNq9e9k3hcaN3CctLbzpu7rPIGLy3AZFAAAAAAAAAAAAAAAAAAAAAAAABXklF75RxS0q5p9U1uZaONmTp1aE35n0KtbslgAAAAAAAAAAAAAAAB//Z" alt="Foto de referencia IMG_4621.HEIC" loading="lazy">
+          <div class="photo-caption">Foto de referencia: IMG_4621</div>
+        </div>
+        <div class="location-info">
+          <div class="zone-label">Las Piedras</div>
+          <h3>Locación Jona 12</h3>
+          <div class="meta-row"><span>2 fotos registradas</span><span>16:32–16:32</span></div>
+          <div class="coords">-34.724747, -56.217196</div>
+          <div class="source-files">Archivos: IMG_4621 IMG_4622</div>
+        </div>
+        <div class="location-actions">
+          <a class="button primary" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=-34.724747,-56.217196&travelmode=driving">Navegar</a>
+          <a class="button secondary" target="_blank" rel="noopener" href="https://www.google.com/maps?q=-34.724747,-56.217196">Ver en Google Maps</a>
+        </div>
+      </article>
+
+      <article class="location-card piedras">
+        <div class="photo-wrap">
+          <img src="data:image/jpeg;base64,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" alt="Foto de referencia IMG_4623.HEIC" loading="lazy">
+          <div class="photo-caption">Foto de referencia: IMG_4623</div>
+        </div>
+        <div class="location-info">
+          <div class="zone-label">Las Piedras</div>
+          <h3>Locación Jona 13</h3>
+          <div class="meta-row"><span>2 fotos registradas</span><span>16:40–16:41</span></div>
+          <div class="coords">-34.729806, -56.222681</div>
+          <div class="source-files">Archivos: IMG_4623 IMG_4624</div>
+        </div>
+        <div class="location-actions">
+          <a class="button primary" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=-34.729806,-56.222681&travelmode=driving">Navegar</a>
+          <a class="button secondary" target="_blank" rel="noopener" href="https://www.google.com/maps?q=-34.729806,-56.222681">Ver en Google Maps</a>
+        </div>
+      </article>
+
+      <article class="location-card piedras">
+        <div class="photo-wrap">
+          <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAoHBwgHBgoICAgLCgoLDhgQDg0NDh0VFhEYIx8lJCIfIiEmKzcvJik0KSEiMEExNDk7Pj4+IiNGQ0xWSkZSQDk+Pv/AABEIAO0A+AMBIgACEQEDEQH/xAAcAAEAAgMBAQEAAAAAAAAAAAAAAQUGBAMCBwj/xABAEAACAQIDBAMEBgUDBQEAAAABAgMEBREABhIhMUFRBxNhcYGRMlLB8CJyodETI1NiFCQzsoKS4YPC/8QAGgEBAAMBAQEAAAAAAAAAAAAAAAIDBAABBf/EACsRAAICAgIBAwQCAwEAAAAAAAABAhEDBBIhMUFRE2FxBSKBkTJSof/aAAwDAQACEQMRAD8A/RzKaoAAauubnMvdmV8sv1Jb+8rknovr3+fM7jbdVo67Kklbduj1OSzq4QpNAAAAAAAAAAAAAAAAAAAAAAAABa9hRa0VQS8ovJqLk1dpJafWN+o5+rMQlWa5cHynGEk3O01JE5OR5TL33H8lYVXPOlq707+Vl/ErgM/iDRqRlKMJdL3P5m5vlb5kncfnGmm6JHi/NORrOYR2s68vt7RfCtuWMlrxs0245LTXzaVo6cVQAAAAAAAAAAAApbtmRCDavjjCjKLjUoOftZFJZX+6/uyZ3K1YSLKwAAAAAAAAAAAADQ9V1OzQ5ilVCEmpHD5Rk+J2TtabemfNOS6Ni3wvZVYp5puGMNKtCMdT25vyfy+yzbc9QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAzi3bLovVx2u1d9TNaz+qzOczqvQoUpyVttqzcXq3MfXQ07VKhPSb3+u+fvQjzEx6AAAAAAAAAAAAAAAAAAAAAAL7tOU18Ne/W1UpdtYyUXp0zLWbB7Y7LeqMfLfuLTT9Z1bkYNvE51kLe9x+cj3iVs3vcx3qaHq4WFjrTbRXcnJGzlH85N8xNyu7MezQAAAAAAAAAAAAABjzTNJpX44ny0YuWw2eZctVQ5E9+fi74Z2f6HN+JpLyOp9nqw2AAAAAAAAAAAAAAAAAADyfsUfpuP4P3IDqvbsEzb2o+JmX5qUMmXAAAAAADWc+vwtCrxjOGd2/NlvwZwyqgKPOMGMXdtZcyNmigAAAAAAAAAAAA1le32GlJ3l8Ec89O2Xby8OKDDs23tQqtatdFnqzjK8XtzcXNx9fcmmMu3nk3zlIrdabO2vxfqaj8Y+Z1rqtqa21drW6sREkkab2EjrAOlUWVoLiKUXdG+vfo/yzBKquHGYm0uVOnGpR1JLvmshec1F8s1AO7pp+K7V1J4RmjxnLp7rttzvfkXv5Z5NyGBU9gAAAAAAAAAAAAAGdbhu1aMnVgnFfbye6d2Pmjj6lrgYeuXqLbR0wAAAAAAAAAAAAABsC/ogfLZ1n6u2m/B6gG81U62pH+zfwyJ2MkEpp0me+PoqOZbaRq6j7c2u1aUzqjOnVx80kvc4u2tvbbOT0AAAAAPZd2UU6vNaTqXCf9ys/ONufb7K6twycpOyjppx0/qN/ov05Zz9yuK9AAAAAAAAAAAAAAA6zab4tKNdOLT8L+H/AAbo8ueyzZZ9ubKcFROlQcrN0p8o8do5LxXVj5wAAAAAAAAAAAAAYi6X3LJtGdGe+fzp0OqUnqLlHZi40bS4p0epG0W8QAF/48LyraDEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAf/Z" alt="Foto de referencia IMG_4625.HEIC" loading="lazy">
+          <div class="photo-caption">Foto de referencia: IMG_4625</div>
+        </div>
+        <div class="location-info">
+          <div class="zone-label">Las Piedras</div>
+          <h3>Locación Jona 14</h3>
+          <div class="meta-row"><span>2 fotos registradas</span><span>16:45–16:45</span></div>
+          <div class="coords">-34.727578, -56.221481</div>
+          <div class="source-files">Archivos: IMG_4625 IMG_4626</div>
+        </div>
+        <div class="location-actions">
+          <a class="button primary" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=-34.727578,-56.221481&travelmode=driving">Navegar</a>
+          <a class="button secondary" target="_blank" rel="noopener" href="https://www.google.com/maps?q=-34.727578,-56.221481">Ver en Google Maps</a>
+        </div>
+      </article>
+
+      <article class="location-card piedras">
+        <div class="photo-wrap">
+          <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAoHBwgHBgoICAgLCgoLDhgQDg0NDh0VFhEYIx8lJCIfIiEmKzcvJik0KSEiMEExNDk7Pj4+IiNGQ0xWSkZSQDk+Pv/AABEIAO0A+AMBIgACEQEDEQH/xAAcAAEAAwEBAQEAAAAAAAAAAAAAAQUGBAcDAgj/xABCEAACAQIDAwIEAwQIBwEAAAABAgMEBREABhIhQTFRE2EHIjJxgZGhsfBBUhQjwdHhMkNyI2KCkpPC8RZjsv/EABoBAAMBAQEBAAAAAAAAAAAAAAECAwAEBQb/xAAtEQACAQQBAwQCAgMAAAAAAAAAAQIDBBESITFBE1FhBRQicYGRofAygf/aAAwDAQACEQMRAD8A/RzKAoCgAAAAAAAAAAAAAAAAAAAAAAAAAAMXUtlbViW8oZc1GIOZe5U9gAAAAAAAAAAAAAAAAAAAAAAA6T2S7Rl7dY9XExx3i41fjdSStv0/Obc7pU6iqfbkmtAfN2+p07iTTnKT7dPCLm3bdX7V+RetXPX2pJGnkT8qYuaiI1Zg+c6fhGpJTyFK7yfaX/WcvO3E8R0vU66fFPXpTt/SWpr35MjB4iKAAAAAAAAAACc9swlQlTpRhVpxhdzlOCt7K3jadrbOXxfPe9ngXja5v6VPwqc3o/llZ75fU9cAtWAAAAAAAAAAAAAAAAAAAAAAucw+D54+1S+1F9oW2uPcv4GK36+nB9h2OocTqyWq0p1oxtP3T1STh9o41fJPe6bKPueJ5eIq0I1V/l0IvkH1ulFla2La61eZzVs08+mj4ouXSiUdZx8qUZNTp1nGDjpa3+bYZd+oaEXYAAAAAAAAAAAAA37eJqla8stZyk95rXzCM1+0TqbjX8KFB9aeUy1AAAAAAAAAAAAD8Bn2OnMKVOnCNStN2j3Xtqx1cXs3rkfTPVVw+wwtvW0Wc5TklFS3bbleJ9VlxVQwAAAAAAAAAAAAAAAAAAJc09LD2kqEJcCu51s3309l9y1WgZOMVtRfM0TV5t+c7gjGOHwxTqTzVXTpZp/6t+uV29J2YeTqUTKXuvYq8vVrhNNtOXlFzR8uSl+OZ5dLWmvoazUCaa2k/BJQAvc88pZgAAAAAAAAAAAAAAAAACZvx3dpuDKTnO/KNdZ3JrxDH5mbP7GKl7S75J75fmflWD6iAAAAAAAAAAAbeKxNrUoyi7cehhjsunJN1rb4ZpAXrKdoWnUZOpX+8m+Xb2lpffc/wytG1AAAAAAAAAAAAAAAAAAAAAAAD83wUxWc05RS2vzI7w2ZO9efhqttzYY9DB1dRs7N2q1XG6SSrZj8+j5eYmnUeBPbu+V/o/6ilDSgLJ+Zt7nHR16a5VnJ7/+B/XnA6FHCVl7y0k1W7W2p+h4ve81m55ndIZRR4mFnFr1pUcqS9tJd+cm7KN/VXmJLd5m5v4c2eF6YYxKSbjFvdslHcw4HF3t5wfH9Nk2zI2DCUoPeUVe73lGpX/kaz9HJeHT8XHWm9Z3KrSlb/wAPPyW7nklk8yX23QwEBAAAAAAAAAAAAAAAAaFtCCgE5NfvK2x9O5sJpWJUaWjTTWjDmi6a6fPh6I5M60agAAAAA3W4uDbWoVk0nz7y9957NW+8zp9L16JGOzJWM57d7y5ZxXLadTbXA1IxjZaUp6SjHX2onx9JPc1rG6YAAAAAAAAAAAAAAAAAR5aQepttnWpQm1a4Jtc5yfhyX83R7mZmZnaTm3oHqeJbqQPjxgpPF/O2/L/ACv81lWW0SbLae2Zuvb0BIAAAAAAAAAAAujO3UpUr1hHuU0lJR5JPdkufCW8+7Mcq0qGTRoj5Ti+IT9U+5e47fP4CxAAAAAAAAAC8K+FEgAAAAAAAAAAAAAkvyb3GSeqr/5QHDbflOVf/AAma3YnOQ+EXqP3fKPHqTQEzAAAAAAAAAAAAAF2O1p+fwCj8pX0T5pLnf0bEAAAAAAAAAAA2NpwsswxrvJOSWne6/3aV7y99kSmpcAgAAAAAAAAAAAAAADonHdhwldO1N/HuTURd76XJlGI6FjAAAABVt+2e0ukXq5ip+Mo5PKU3lOf1R0Jp8QNKZE5I8gAAAAAAAAAAACxsxgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//2Q==" alt="Foto de referencia IMG_4627.HEIC" loading="lazy">
+          <div class="photo-caption">Foto de referencia: IMG_4627</div>
+        </div>
+        <div class="location-info">
+          <div class="zone-label">Las Piedras</div>
+          <h3>Locación Jona 15</h3>
+          <div class="meta-row"><span>5 fotos registradas</span><span>16:57–16:58</span></div>
+          <div class="coords">-34.722098, -56.211445</div>
+          <div class="source-files">Archivos: IMG_4627 IMG_4628 IMG_4629 IMG_4630 IMG_4631</div>
+        </div>
+        <div class="location-actions">
+          <a class="button primary" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=-34.722098,-56.211445&travelmode=driving">Navegar</a>
+          <a class="button secondary" target="_blank" rel="noopener" href="https://www.google.com/maps?q=-34.722098,-56.211445">Ver en Google Maps</a>
+        </div>
+      </article>
+
+
+    <footer>
+      Coordenadas tomadas de la metadata GPS de las fotos originales del scouting. Las imágenes visibles son referencias comprimidas para esta guía.
+    </footer>
+  </main>
 </body>
 </html>
